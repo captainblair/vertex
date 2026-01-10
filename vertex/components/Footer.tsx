@@ -2,9 +2,9 @@
 import React from 'react';
 import { Facebook, Twitter, Instagram } from 'lucide-react';
 
-const FooterLink: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+const FooterLink: React.FC<{ children: React.ReactNode, onClick?: () => void }> = ({ children, onClick }) => (
   <li>
-    <button className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 hover:text-brand transition-colors">{children}</button>
+    <button onClick={onClick} className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 hover:text-brand transition-colors">{children}</button>
   </li>
 );
 
@@ -14,11 +14,11 @@ const SocialIcon: React.FC<{ icon: React.ReactNode }> = ({ icon }) => (
   </button>
 );
 
-const Footer: React.FC = () => {
+const Footer: React.FC<{ onStory: () => void, onCollections: () => void }> = ({ onStory, onCollections }) => {
   return (
     <footer className="bg-dark text-white pt-32 pb-12 px-6 md:px-12">
       <div className="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20">
-        
+
         {/* Brand Area */}
         <div className="space-y-8">
           <h2 className="text-4xl font-black tracking-tighter text-white">VERTEX</h2>
@@ -36,10 +36,10 @@ const Footer: React.FC = () => {
         <div className="space-y-8">
           <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-300">Archives</h4>
           <ul className="space-y-4">
-            <FooterLink>Technical Node</FooterLink>
-            <FooterLink>Apparel 01</FooterLink>
-            <FooterLink>Modular Objects</FooterLink>
-            <FooterLink>Limited Release</FooterLink>
+            <FooterLink onClick={onCollections}>Technical Node</FooterLink>
+            <FooterLink onClick={onCollections}>Apparel 01</FooterLink>
+            <FooterLink onClick={onCollections}>Modular Objects</FooterLink>
+            <FooterLink onClick={onCollections}>Limited Release</FooterLink>
           </ul>
         </div>
 
@@ -47,7 +47,7 @@ const Footer: React.FC = () => {
         <div className="space-y-8">
           <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-300">Company</h4>
           <ul className="space-y-4">
-            <FooterLink>Our Story</FooterLink>
+            <FooterLink onClick={onStory}>Our Story</FooterLink>
             <FooterLink>Sustainability</FooterLink>
             <FooterLink>Verified Protocol</FooterLink>
             <FooterLink>Press Archive</FooterLink>

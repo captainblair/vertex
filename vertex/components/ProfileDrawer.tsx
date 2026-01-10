@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, User, ShoppingBag, Heart, Settings, LogOut, ShieldCheck } from 'lucide-react';
 import { useStore } from '../store';
 import { UserRole } from '../types';
+import { authService } from '../services/auth';
 
 interface ProfileDrawerProps {
   onHome: () => void;
@@ -16,24 +17,24 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({ onHome }) => {
     <AnimatePresence>
       {isProfileOpen && (
         <>
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setProfileOpen(false)}
-            className="fixed inset-0 bg-black/20 z-[110] backdrop-blur-[4px]"
+            className="fixed inset-0 bg-black/40 z-[110]"
           />
-          <motion.aside 
+          <motion.aside
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-white z-[120] flex flex-col shadow-2xl border-l border-zinc-100"
+            className="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-zinc-50 z-[120] flex flex-col shadow-2xl border-l border-zinc-100"
           >
             <div className="p-8 flex justify-between items-center border-b border-zinc-50">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-dark flex items-center justify-center text-white text-xs font-black shadow-2xl">
-                  {user?.full_name.charAt(0)}
+                  {user?.full_name?.charAt(0) || 'U'}
                 </div>
                 <div>
                   <h3 className="text-xs font-black uppercase tracking-widest text-dark">{user?.full_name}</h3>
@@ -50,26 +51,40 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({ onHome }) => {
               <DrawerItem icon={<ShoppingBag size={18} />} label="Archive History" />
               <DrawerItem icon={<Heart size={18} />} label="Saved Objects" />
               <DrawerItem icon={<Settings size={18} />} label="Security Settings" />
-              
+
               <div className="my-8 border-t border-zinc-50" />
-              
-              <div className="px-4 py-4 text-[9px] font-black text-zinc-300 uppercase tracking-[0.4em]">Admin Access</div>
-              <DrawerItem 
-                icon={<User size={18} />} 
-                label="Storefront Mode" 
-                active={role === UserRole.BUYER}
-                onClick={() => { setRole(UserRole.BUYER); setProfileOpen(false); onHome(); }}
-              />
-              <DrawerItem 
-                icon={<ShieldCheck size={18} />} 
-                label="Command Center" 
-                active={role === UserRole.ADMIN}
-                onClick={() => { setRole(UserRole.ADMIN); setProfileOpen(false); }}
-              />
+
+              {user?.role === 'admin' && (
+                <>
+                  <div className="px-4 py-4 text-[9px] font-black text-zinc-300 uppercase tracking-[0.4em]">Admin Access</div>
+                  <DrawerItem
+                    icon={<User size={18} />}
+                    label="Storefront Mode"
+                    active={role === UserRole.BUYER}
+                    onClick={() => { setRole(UserRole.BUYER); setProfileOpen(false); onHome(); }}
+                  />
+                  <DrawerItem
+                    icon={<ShieldCheck size={18} />}
+                    label="Command Center"
+                    active={role === UserRole.ADMIN}
+                    onClick={() => { setRole(UserRole.ADMIN); setProfileOpen(false); }}
+                  />
+                </>
+              )}
             </div>
 
             <div className="p-8 border-t border-zinc-50 bg-zinc-50/50">
-              <button className="flex items-center gap-4 w-full p-4 text-dark font-black text-[10px] uppercase tracking-[0.3em] hover:bg-white rounded-2xl shadow-sm transition-all border border-transparent hover:border-zinc-100 group">
+              <button
+                onClick={async () => {
+                  try {
+                    await authService.signOut();
+                    setProfileOpen(false);
+                  } catch (e) {
+                    console.error("Sign out failed", e);
+                  }
+                }}
+                className="flex items-center gap-4 w-full p-4 text-dark font-black text-[10px] uppercase tracking-[0.3em] hover:bg-white rounded-2xl shadow-sm transition-all border border-transparent hover:border-zinc-100 group"
+              >
                 <LogOut size={16} className="text-zinc-400 group-hover:text-red-500 transition-colors" />
                 <span>Sign Out Protocol</span>
               </button>
@@ -82,7 +97,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({ onHome }) => {
 };
 
 const DrawerItem: React.FC<{ icon: any, label: string, active?: boolean, onClick?: () => void }> = ({ icon, label, active, onClick }) => (
-  <button 
+  <button
     onClick={onClick}
     className={`w-full flex items-center gap-5 px-6 py-4.5 text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl transition-all ${active ? 'bg-dark text-white shadow-xl' : 'text-zinc-500 hover:bg-zinc-50'}`}
   >

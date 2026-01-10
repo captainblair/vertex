@@ -16,42 +16,36 @@ const MOCK_PRODUCTS: Product[] = [
 ];
 
 const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
-  const { addToCart, activeCategory, setActiveCategory, setFilterOpen } = useStore();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1200);
-    return () => clearTimeout(timer);
-  }, []);
+  const { products, isLoading, addToCart, activeCategory, setActiveCategory, setFilterOpen } = useStore();
 
   const scrollToArchive = () => {
     document.getElementById('archive')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const filteredProducts = activeCategory === 'All' 
-    ? MOCK_PRODUCTS 
-    : MOCK_PRODUCTS.filter(p => p.category === activeCategory);
+  const filteredProducts = activeCategory === 'All'
+    ? products
+    : products.filter(p => p.category === activeCategory);
 
   return (
-    <div className="w-full flex flex-col bg-white overflow-hidden selection:bg-brand/10">
-      
+    <div className="w-full flex flex-col bg-bone overflow-hidden selection:bg-brand/10">
+
       {/* 1. Kinetic Hero: Constant Bold Glide */}
       <section className="relative w-full h-screen overflow-hidden flex items-center justify-center pt-48 md:pt-64">
         <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=2000" 
-            className="w-full h-full object-cover grayscale brightness-[0.7] scale-100" 
+          <img
+            src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=2000"
+            className="w-full h-full object-cover grayscale brightness-[0.7] scale-100"
             alt="Vertex Context"
           />
         </div>
 
         <div className="relative z-20 text-center space-y-10 px-6 max-w-7xl">
           <motion.div
-            animate={{ 
-              y: [15, -15, 15] 
+            animate={{
+              y: [15, -15, 15]
             }}
-            transition={{ 
-              duration: 6, 
+            transition={{
+              duration: 6,
               ease: "easeInOut",
               repeat: Infinity,
             }}
@@ -59,16 +53,16 @@ const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
           >
             <span className="text-white text-[10px] md:text-[12px] font-black uppercase tracking-[1em] md:tracking-[1.5em] opacity-100 block mb-4 technical-shadow-text">Establishing Excellence</span>
             <h1 className="text-6xl md:text-[140px] font-black text-white leading-[0.85] tracking-tighter uppercase select-none technical-shadow-text">
-              THE NEW <br/> STANDARD.
+              THE NEW <br /> STANDARD.
             </h1>
           </motion.div>
-          
-          <motion.p 
-            animate={{ 
-              y: [10, -10, 10] 
+
+          <motion.p
+            animate={{
+              y: [10, -10, 10]
             }}
-            transition={{ 
-              duration: 6, 
+            transition={{
+              duration: 6,
               ease: "easeInOut",
               repeat: Infinity,
               delay: 0.2
@@ -84,7 +78,7 @@ const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
             transition={{ delay: 1, duration: 1 }}
             className="pt-12"
           >
-            <button 
+            <button
               onClick={scrollToArchive}
               className="bg-white text-dark px-16 py-6 rounded-full font-black text-xs uppercase tracking-[0.4em] shadow-2xl hover:bg-zinc-100 transition-all active:scale-95 group"
             >
@@ -98,18 +92,18 @@ const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
       <div className="h-px w-full bg-zinc-200 relative z-30" />
 
       {/* 2. Department Sub-Nav with Indicator */}
-      <nav className="sticky top-[88px] z-50 bg-white/95 backdrop-blur-xl border-b border-zinc-100 py-6">
+      <nav className="sticky top-[88px] z-50 bg-zinc-100/80 backdrop-blur-xl border-b border-zinc-200/50 py-6">
         <div className="max-w-screen-2xl mx-auto px-6 md:px-12 flex items-center justify-between">
           <div className="flex gap-4 md:gap-8 relative items-center">
             {['All', 'Electronics', 'Apparel', 'Lifestyle'].map((cat) => (
-              <button 
+              <button
                 key={cat}
                 onClick={() => setActiveCategory(cat as any)}
                 className={`relative px-6 py-2.5 text-[10px] font-black uppercase tracking-[0.3em] transition-colors duration-500 z-10 ${activeCategory === cat ? 'text-white' : 'text-zinc-400 hover:text-dark'}`}
               >
                 {cat === 'All' ? 'Archive' : cat === 'Electronics' ? 'Technical' : cat}
                 {activeCategory === cat && (
-                  <motion.div 
+                  <motion.div
                     layoutId="dept-capsule"
                     className="absolute inset-0 bg-dark rounded-full -z-10"
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
@@ -118,7 +112,7 @@ const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
               </button>
             ))}
           </div>
-          <button 
+          <button
             onClick={() => setFilterOpen(true)}
             className="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400 hover:text-dark transition-all group"
           >
@@ -130,7 +124,7 @@ const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
       {/* 3. Product Archive: Architectural Symmetry */}
       <div id="archive" className="bg-blueprint blueprint-lines min-h-screen relative py-40 px-6 md:px-12">
         <div className="max-w-screen-2xl mx-auto">
-          {loading ? (
+          {isLoading ? (
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
               {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
                 <div key={i} className="aspect-[4/5] bg-zinc-100 rounded-[2.5rem] animate-pulse" />
@@ -153,7 +147,7 @@ const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
           <div className="space-y-10">
             <span className="text-brand text-[11px] font-black uppercase tracking-[0.8em]">Architectural Vision</span>
             <h3 className="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-[0.85]">
-              ENGINEERED <br/> SIMPLICITY.
+              ENGINEERED <br /> SIMPLICITY.
             </h3>
             <p className="text-zinc-500 text-xl font-light leading-relaxed max-w-lg">
               Vertex is a singular vision of quality. We curate objects that redefine technical performance through minimalist architectural principles.
@@ -163,10 +157,10 @@ const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
             </button>
           </div>
           <div className="aspect-[4/5] rounded-[4rem] overflow-hidden shadow-2xl grayscale brightness-75 hover:grayscale-0 hover:brightness-100 transition-all duration-[2s]">
-            <img 
-              src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200" 
-              className="w-full h-full object-cover" 
-              alt="Vertex Studio" 
+            <img
+              src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200"
+              className="w-full h-full object-cover"
+              alt="Vertex Studio"
             />
           </div>
         </div>
@@ -177,7 +171,7 @@ const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
 
 // Explicitly typing ProductCard as React.FC to handle symmetrical sizing and silent hover actions.
 const ProductCard: React.FC<{ product: Product, onAdd: () => void }> = ({ product, onAdd }) => (
-  <motion.div 
+  <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: "-50px" }}
@@ -186,7 +180,7 @@ const ProductCard: React.FC<{ product: Product, onAdd: () => void }> = ({ produc
     {/* Uniform Plinth Card: Strict 4:5 Aspect Ratio */}
     <div className="relative aspect-[4/5] bg-white border border-zinc-100 rounded-[2.5rem] overflow-hidden shadow-plinth transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:shadow-plinth-hover group-hover:-translate-y-1.5">
       <div className="absolute inset-0 border border-transparent group-hover:border-zinc-200/50 z-10 rounded-[2.5rem] pointer-events-none transition-all duration-700" />
-      
+
       {/* Meta Indicators */}
       <div className="absolute top-6 left-6 z-20 flex gap-2">
         <span className="bg-white/90 backdrop-blur px-2.5 py-1 text-[8px] font-mono font-bold uppercase tracking-widest border border-zinc-100 rounded-sm text-zinc-400">
@@ -196,16 +190,16 @@ const ProductCard: React.FC<{ product: Product, onAdd: () => void }> = ({ produc
 
       {/* Internal Scale Image */}
       <div className="w-full h-full overflow-hidden">
-        <img 
-          src={product.image} 
-          className={`w-full h-full object-cover transition-all duration-[1.5s] ease-[cubic-bezier(0.16,1,0.3,1)] saturate-[0.9] group-hover:saturate-100 group-hover:scale-110 ${product.category === 'Electronics' ? 'p-10 !object-contain' : ''}`} 
+        <img
+          src={product.image}
+          className={`w-full h-full object-cover transition-all duration-[1.5s] ease-[cubic-bezier(0.16,1,0.3,1)] saturate-[0.9] group-hover:saturate-100 group-hover:scale-110 ${product.category === 'Electronics' ? 'p-10 !object-contain' : ''}`}
           alt={product.title}
         />
       </div>
 
       {/* Silent Action Slide-Up: Added Price Visibility */}
       <div className="absolute bottom-0 left-0 right-0 z-30 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] p-5">
-        <button 
+        <button
           onClick={onAdd}
           className="w-full bg-dark text-white py-4.5 rounded-full text-[10px] font-black uppercase tracking-[0.4em] shadow-2xl hover:bg-zinc-800 transition-colors flex items-center justify-center gap-3"
         >
@@ -213,7 +207,7 @@ const ProductCard: React.FC<{ product: Product, onAdd: () => void }> = ({ produc
         </button>
       </div>
     </div>
-    
+
     {/* Text Ledger Container: Fixed Height for Symmetry */}
     <div className="mt-6 px-3 space-y-3 flex flex-col justify-between min-h-[100px]">
       <div className="space-y-1.5">
@@ -221,8 +215,8 @@ const ProductCard: React.FC<{ product: Product, onAdd: () => void }> = ({ produc
         <h3 className="text-[15px] font-medium text-dark tracking-tight leading-snug line-clamp-2">{product.title}</h3>
       </div>
       <div className="flex justify-between items-end pt-3 border-t border-zinc-50">
-         <span className="text-sm font-mono font-bold tracking-tighter text-dark uppercase">KSh {product.price.toLocaleString()}</span>
-         <span className="text-[8px] font-mono font-bold uppercase tracking-[0.2em] text-zinc-300">[ IN STOCK ]</span>
+        <span className="text-sm font-mono font-bold tracking-tighter text-dark uppercase">KSh {product.price.toLocaleString()}</span>
+        <span className="text-[8px] font-mono font-bold uppercase tracking-[0.2em] text-zinc-300">[ IN STOCK ]</span>
       </div>
     </div>
   </motion.div>

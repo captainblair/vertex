@@ -16,14 +16,14 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ onCheckout }) => {
     <AnimatePresence>
       {isCartOpen && (
         <>
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setCartOpen(false)}
-            className="fixed inset-0 bg-black/60 z-[150] backdrop-blur-sm"
+            className="fixed inset-0 bg-black/60 z-[150]"
           />
-          <motion.div 
+          <motion.div
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
@@ -76,8 +76,8 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ onCheckout }) => {
                   <span className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500">Total Settlement</span>
                   <span className="text-white text-xl font-mono font-black">KSh {total.toLocaleString()}</span>
                 </div>
-                <Button 
-                  variant="cta" 
+                <Button
+                  variant="cta"
                   className="w-full py-6 rounded-full text-[10px] font-black uppercase tracking-[0.4em] flex items-center justify-center gap-2"
                   onClick={() => {
                     setCartOpen(false);

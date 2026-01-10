@@ -20,14 +20,14 @@ const FilterDrawer: React.FC = () => {
     <AnimatePresence>
       {isFilterOpen && (
         <>
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setFilterOpen(false)}
-            className="fixed inset-0 bg-black/40 z-[150] backdrop-blur-sm"
+            className="fixed inset-0 bg-black/40 z-[150]"
           />
-          <motion.aside 
+          <motion.aside
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
@@ -62,11 +62,11 @@ const FilterDrawer: React.FC = () => {
                 <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400">Surface Finish</h4>
                 <div className="flex flex-wrap gap-4">
                   {COLORS.map((color) => (
-                    <button 
+                    <button
                       key={color.name}
                       className="group flex flex-col items-center gap-3 transition-all"
                     >
-                      <div 
+                      <div
                         className="w-10 h-10 rounded-full border border-zinc-200 transition-all group-hover:scale-110 shadow-sm"
                         style={{ backgroundColor: color.hex }}
                       />
