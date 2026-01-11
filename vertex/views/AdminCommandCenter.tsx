@@ -7,6 +7,8 @@ import Button from '../components/Button';
 
 import { productService } from '../services/products';
 
+import { useNavigate } from 'react-router-dom';
+
 const REVENUE_DATA = [
   { month: 'JAN', rev: 400000 },
   { month: 'FEB', rev: 300000 },
@@ -16,11 +18,12 @@ const REVENUE_DATA = [
   { month: 'JUN', rev: 900000 },
 ];
 
-const AdminCommandCenter: React.FC<{ onHome: () => void }> = ({ onHome }) => {
+const AdminCommandCenter: React.FC = () => {
   const { products, isLoading, fetchProducts, announcementText, setAnnouncementText, draftProduct, setDraftProduct } = useStore();
   const [localAnnouncement, setLocalAnnouncement] = useState(announcementText);
   const [activeTab, setActiveTab] = useState<'inventory' | 'sales' | 'settings'>('inventory');
   const [isCreating, setIsCreating] = useState(false);
+  const navigate = useNavigate();
 
   const handleAnnouncementUpdate = () => {
     setAnnouncementText(localAnnouncement);
@@ -83,7 +86,7 @@ const AdminCommandCenter: React.FC<{ onHome: () => void }> = ({ onHome }) => {
             <p className="text-zinc-500 font-medium tracking-tight">Manage products, orders, and inventory.</p>
           </div>
           <div className="flex gap-4">
-            <Button variant="secondary" onClick={onHome}>View Storefront</Button>
+            <Button variant="secondary" onClick={() => navigate('/')}>View Storefront</Button>
             <Button variant="cta">Sync Data</Button>
           </div>
         </div>

@@ -3,13 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Minus, Plus, ShoppingBag, ArrowRight } from 'lucide-react';
 import { useStore } from '../store';
 import Button from './Button';
+import { useNavigate } from 'react-router-dom';
 
-interface CartDrawerProps {
-  onCheckout: () => void;
-}
-
-const CartDrawer: React.FC<CartDrawerProps> = ({ onCheckout }) => {
+const CartDrawer: React.FC = () => {
   const { cart, isCartOpen, setCartOpen, updateQuantity, removeFromCart } = useStore();
+  const navigate = useNavigate();
   const total = cart.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
 
   return (
@@ -81,7 +79,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ onCheckout }) => {
                   className="w-full py-6 rounded-full text-[10px] font-black uppercase tracking-[0.4em] flex items-center justify-center gap-2"
                   onClick={() => {
                     setCartOpen(false);
-                    onCheckout();
+                    navigate('/checkout');
                   }}
                 >
                   Proceed to Vault <ArrowRight size={18} />

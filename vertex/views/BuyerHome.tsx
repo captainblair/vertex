@@ -15,7 +15,7 @@ const MOCK_PRODUCTS: Product[] = [
   { id: 'p8', title: 'Ceramic Serving Set', description: 'Minimalist dining nodes with matte obsidian finish.', price: 8200, stock: 30, image: 'https://images.unsplash.com/photo-1578749553375-8785836d31bc?auto=format&fit=crop&q=80&w=800', category: 'Lifestyle', is_approved: true, vendor_name: 'Vertex' },
 ];
 
-const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
+const BuyerHome: React.FC = () => {
   const { products, isLoading, addToCart, activeCategory, setActiveCategory, setFilterOpen } = useStore();
 
   const scrollToArchive = () => {

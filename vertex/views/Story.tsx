@@ -1,14 +1,17 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheck, Cpu, Globe, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-const Story: React.FC<{ onShop: () => void }> = ({ onShop }) => {
+const Story: React.FC = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="min-h-screen max-w-full overflow-x-hidden bg-[#F0F0F0] text-dark relative">
             {/* Hero Header */}
-            <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-white border-b border-zinc-200 w-full max-w-full pt-44 md:pt-64 pb-24">
-                <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-32 items-center px-6 relative z-10">
+            {/* Hero Header */}
+            <section className="relative min-h-[30vh] flex items-center justify-center overflow-hidden bg-white border-b border-zinc-200 w-full max-w-full pt-32 pb-12">
+                <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-32 items-center px-6 relative z-10">
                     <div className="space-y-12">
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
@@ -71,7 +74,7 @@ const Story: React.FC<{ onShop: () => void }> = ({ onShop }) => {
             </section>
 
             {/* Philosophy Grid */}
-            <section className="py-20 md:py-32 bg-dark text-white px-6">
+            <section className="py-12 md:py-20 bg-dark text-white px-6">
                 <div className="max-w-screen-2xl mx-auto">
                     <div className="space-y-16 md:space-y-24">
                         <div className="text-center space-y-4">
@@ -172,7 +175,7 @@ const Story: React.FC<{ onShop: () => void }> = ({ onShop }) => {
                     </div>
 
                     <button
-                        onClick={onShop}
+                        onClick={() => navigate('/')}
                         className="inline-flex items-center gap-8 group"
                     >
                         <span className="text-xs font-black uppercase tracking-[0.5em]">Browse Products</span>

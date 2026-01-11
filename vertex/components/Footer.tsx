@@ -1,10 +1,18 @@
-
 import React from 'react';
 import { Facebook, Github, Linkedin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-const FooterLink: React.FC<{ children: React.ReactNode, onClick?: () => void }> = ({ children, onClick }) => (
+const FooterLink: React.FC<{ children: React.ReactNode, to?: string }> = ({ children, to }) => (
   <li>
-    <button onClick={onClick} className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 hover:text-brand transition-colors">{children}</button>
+    {to ? (
+      <Link to={to} className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 hover:text-brand transition-colors block">
+        {children}
+      </Link>
+    ) : (
+      <button className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 hover:text-brand transition-colors">
+        {children}
+      </button>
+    )}
   </li>
 );
 
@@ -25,7 +33,7 @@ const XLogo = () => (
   </svg>
 );
 
-const Footer: React.FC<{ onStory: () => void, onCollections: () => void }> = ({ onStory, onCollections }) => {
+const Footer: React.FC = () => {
   return (
     <footer className="bg-dark text-white pt-32 pb-12 px-6 md:px-12">
       <div className="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20">
@@ -48,10 +56,10 @@ const Footer: React.FC<{ onStory: () => void, onCollections: () => void }> = ({ 
         <div className="space-y-8">
           <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-300">Products</h4>
           <ul className="space-y-4">
-            <FooterLink onClick={onCollections}>Electronics</FooterLink>
-            <FooterLink onClick={onCollections}>Fashion</FooterLink>
-            <FooterLink onClick={onCollections}>Home & Living</FooterLink>
-            <FooterLink onClick={onCollections}>New Arrivals</FooterLink>
+            <FooterLink to="/collections">Electronics</FooterLink>
+            <FooterLink to="/collections">Fashion</FooterLink>
+            <FooterLink to="/collections">Home & Living</FooterLink>
+            <FooterLink to="/collections">New Arrivals</FooterLink>
           </ul>
         </div>
 
@@ -59,7 +67,7 @@ const Footer: React.FC<{ onStory: () => void, onCollections: () => void }> = ({ 
         <div className="space-y-8">
           <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-300">Company</h4>
           <ul className="space-y-4">
-            <FooterLink onClick={onStory}>About Us</FooterLink>
+            <FooterLink to="/story">About Us</FooterLink>
             <FooterLink>Sustainability</FooterLink>
             <FooterLink>News</FooterLink>
           </ul>

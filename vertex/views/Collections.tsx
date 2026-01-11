@@ -1,12 +1,13 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Layers, Box, Zap, ShoppingBag } from 'lucide-react';
 import { useStore } from '../store';
 import Button from '../components/Button';
+import { useNavigate } from 'react-router-dom';
 
-const Collections: React.FC<{ onShop: () => void }> = ({ onShop }) => {
+const Collections: React.FC = () => {
     const { setActiveCategory } = useStore();
+    const navigate = useNavigate();
 
     const collections = [
         {
@@ -40,13 +41,13 @@ const Collections: React.FC<{ onShop: () => void }> = ({ onShop }) => {
 
     const handleCollectionClick = (category: any) => {
         setActiveCategory(category);
-        onShop();
+        navigate('/');
     };
 
     return (
         <div className="min-h-screen max-w-full overflow-x-hidden bg-[#F0F0F0] text-dark relative">
             {/* Hero Header */}
-            <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden bg-zinc-900 shadow-2xl">
+            <section className="relative h-64 md:h-80 flex items-center justify-center overflow-hidden bg-zinc-900 shadow-2xl">
                 <div className="absolute inset-0 z-0 text-white">
                     <img
                         src="https://images.unsplash.com/photo-1441984276008-2e06990d1656?auto=format&fit=crop&q=80&w=2000"
@@ -68,7 +69,7 @@ const Collections: React.FC<{ onShop: () => void }> = ({ onShop }) => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-2xl md:text-8xl font-black uppercase italic tracking-tighter text-white leading-none"
+                        className="text-2xl md:text-6xl font-black uppercase italic tracking-tighter text-white leading-none"
                     >
                         Curated <br /> Collections
                     </motion.h1>
@@ -76,8 +77,8 @@ const Collections: React.FC<{ onShop: () => void }> = ({ onShop }) => {
             </section>
 
             {/* Collections Grid */}
-            <section className="max-w-screen-2xl mx-auto px-6 md:px-20 py-20 md:py-32">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <section className="max-w-screen-2xl mx-auto px-6 md:px-20 py-10 md:py-16">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
                     {collections.map((collection, index) => (
                         <motion.div
                             key={collection.id}
@@ -130,7 +131,7 @@ const Collections: React.FC<{ onShop: () => void }> = ({ onShop }) => {
                     <Button
                         variant="cta"
                         className="px-12 py-6 rounded-full"
-                        onClick={onShop}
+                        onClick={() => navigate('/')}
                     >
                         Explore Full Registry <ShoppingBag size={18} className="ml-2" />
                     </Button>

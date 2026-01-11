@@ -1,21 +1,18 @@
 import React from 'react';
 import { Home, Search, ShoppingBag, Menu, UserCircle } from 'lucide-react';
 import { useStore } from '../store';
+import { Link } from 'react-router-dom';
 
-interface MobileNavProps {
-  onHome: () => void;
-}
-
-const MobileNav: React.FC<MobileNavProps> = ({ onHome }) => {
+const MobileNav: React.FC = () => {
   const { setMenuOpen, setCartOpen, setProfileOpen, cart } = useStore();
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-[100] md:hidden px-6 pb-6 pt-2">
       <div className="glass-dock border border-zinc-800/50 shadow-2xl rounded-full h-16 flex justify-around items-center px-4">
-        <button onClick={onHome} className="p-3 text-zinc-500 hover:text-white transition-all tap-scale">
+        <Link to="/" className="p-3 text-zinc-500 hover:text-white transition-all tap-scale">
           <Home size={22} />
-        </button>
+        </Link>
         <button className="p-3 text-zinc-500 hover:text-white transition-all tap-scale">
           <Search size={22} />
         </button>

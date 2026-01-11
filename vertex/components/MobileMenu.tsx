@@ -1,21 +1,15 @@
-
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ShoppingBag, Info, Layers, ShieldCheck, ArrowRight } from 'lucide-react';
 import { useStore } from '../store';
+import { useNavigate } from 'react-router-dom';
 
-interface MobileMenuProps {
-    onHome: () => void;
-    onCollections: () => void;
-    onStory: () => void;
-    onAuth: () => void;
-}
-
-const MobileMenu: React.FC<MobileMenuProps> = ({ onHome, onCollections, onStory, onAuth }) => {
+const MobileMenu: React.FC = () => {
     const { isMenuOpen, setMenuOpen, user } = useStore();
+    const navigate = useNavigate();
 
-    const handleNav = (fn: () => void) => {
-        fn();
+    const handleNav = (path: string) => {
+        navigate(path);
         setMenuOpen(false);
     };
 
@@ -49,26 +43,26 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ onHome, onCollections, onStory,
                                 icon={<ShoppingBag size={20} />}
                                 label="The Store"
                                 sub="Full Objects Archive"
-                                onClick={() => handleNav(onHome)}
+                                onClick={() => handleNav('/')}
                             />
                             <NavNode
                                 icon={<Layers size={20} />}
                                 label="Collections"
                                 sub="Curated Registry Nodes"
-                                onClick={() => handleNav(onCollections)}
+                                onClick={() => handleNav('/collections')}
                             />
                             <NavNode
                                 icon={<Info size={20} />}
                                 label="Our Story"
                                 sub="The Vertex Manifest"
-                                onClick={() => handleNav(onStory)}
+                                onClick={() => handleNav('/story')}
                             />
                             {!user && (
                                 <NavNode
                                     icon={<ShieldCheck size={20} />}
                                     label="Auth Sync"
                                     sub="Connect via Protocol"
-                                    onClick={() => handleNav(onAuth)}
+                                    onClick={() => handleNav('/auth')}
                                 />
                             )}
                         </nav>

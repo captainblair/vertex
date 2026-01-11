@@ -1,21 +1,23 @@
-
 import React, { useState } from 'react';
 import { useStore } from '../store';
 import { authService } from '../services/auth';
 import Button from '../components/Button';
-import { Mail, Lock, User, ArrowRight, ShieldCheck, Github } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, ShieldCheck, Github, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
-const Auth: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+const Auth: React.FC = () => {
     const [mode, setMode] = useState<'signin' | 'signup'>('signin');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const { initializeAuth } = useStore();
+    const navigate = useNavigate();
 
     const handleAuth = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -27,7 +29,7 @@ const Auth: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                 const user = await authService.signIn(email, password);
                 if (user) {
                     initializeAuth();
-                    onBack();
+                    navigate('/');
                 }
             } else {
                 const user = await authService.signUp(email, password, fullName, phoneNumber);
@@ -65,13 +67,13 @@ const Auth: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                 <div className="absolute inset-0 blueprint-lines opacity-10" />
                 <div className="relative z-10 space-y-8 max-w-md">
                     <div className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.5em] text-brand border border-brand/30 px-4 py-2 rounded-full">
-                        <ShieldCheck size={14} /> Secure Protocol
+                        <ShieldCheck size={14} /> Sign Up / Register
                     </div>
                     <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none text-white italic">
-                        Access <br /> Vertex Node
+                        Access <br /> Your Account
                     </h1>
                     <p className="text-zinc-500 font-medium tracking-tight text-lg">
-                        Synchronize your credentials to access the global distribution archive and distribution tools.
+                        Create your account to start shopping
                     </p>
                     <div className="flex gap-4 pt-4">
                         <div className="p-4 bg-white/5 rounded-2xl border border-white/10 group hover:border-brand/40 transition-colors">
@@ -97,19 +99,19 @@ const Auth: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             </div>
 
             {/* Auth Interface Side */}
-            <div className="flex-1 flex flex-col items-center justify-center p-6 md:p-24 relative">
+            <div className="flex-1 flex flex-col items-start justify-start pt-40 px-6 md:px-24 relative">
                 <button
-                    onClick={onBack}
+                    onClick={() => navigate('/')}
                     className="absolute top-8 left-8 md:top-12 md:left-12 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 hover:text-dark transition-colors flex items-center gap-2 group"
                 >
                     <ArrowRight size={14} className="rotate-180 group-hover:-translate-x-1 transition-transform" />
-                    Abort Sync
+                    Cancel
                 </button>
 
                 <div className="w-full max-w-sm space-y-10">
                     <div className="space-y-8">
                         <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tighter text-dark italic">
-                            {mode === 'signin' ? 'System Login' : 'Customer Enrollment'}
+                            {mode === 'signin' ? 'Sign In' : 'Register'}
                         </h2>
 
                         {/* Mode Switcher Tabs */}
@@ -139,30 +141,30 @@ const Auth: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                                     className="space-y-4 overflow-hidden"
                                 >
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 block ml-1">Full Name</label>
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 block ml-1">Full Name</label>
                                         <div className="relative group">
-                                            <User className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-300 group-focus-within:text-brand transition-colors" size={18} />
+                                            <User className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-brand transition-colors" size={18} />
                                             <input
                                                 type="text"
                                                 required
                                                 value={fullName}
                                                 onChange={(e) => setFullName(e.target.value)}
-                                                placeholder="e.g. John Doe"
-                                                className="w-full bg-zinc-100/50 border border-zinc-100 p-4 pl-12 rounded-2xl text-xs font-bold uppercase tracking-widest outline-none focus:ring-2 focus:ring-brand/10 focus:bg-white transition-all shadow-sm"
+                                                placeholder="e.g. Tony Blair"
+                                                className="w-full bg-white border border-zinc-200 p-4 pl-12 rounded-2xl text-sm font-bold text-dark placeholder:text-zinc-400 outline-none focus:ring-2 focus:ring-brand/10 focus:border-brand transition-all shadow-sm"
                                             />
                                         </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 block ml-1">Contact Protocol (254...)</label>
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 block ml-1">Phone Number (254...)</label>
                                         <div className="relative group">
-                                            <ArrowRight className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-300 group-focus-within:text-brand transition-colors" size={18} />
+                                            <ArrowRight className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-brand transition-colors" size={18} />
                                             <input
                                                 type="text"
                                                 required
                                                 value={phoneNumber}
                                                 onChange={(e) => setPhoneNumber(e.target.value)}
-                                                placeholder="254700000000"
-                                                className="w-full bg-zinc-100/50 border border-zinc-100 p-4 pl-12 rounded-2xl text-xs font-bold uppercase tracking-widest outline-none focus:ring-2 focus:ring-brand/10 focus:bg-white transition-all shadow-sm"
+                                                placeholder="e.g. 254700000000"
+                                                className="w-full bg-white border border-zinc-200 p-4 pl-12 rounded-2xl text-sm font-bold text-dark placeholder:text-zinc-400 outline-none focus:ring-2 focus:ring-brand/10 focus:border-brand transition-all shadow-sm"
                                             />
                                         </div>
                                     </div>
@@ -171,39 +173,49 @@ const Auth: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                         </AnimatePresence>
 
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 block ml-1">Email Terminal</label>
+                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 block ml-1">Email Address</label>
                             <div className="relative group">
-                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-300 group-focus-within:text-brand transition-colors" size={18} />
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-brand transition-colors" size={18} />
                                 <input
                                     type="email"
                                     required
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="admin@vertex.com"
-                                    className="w-full bg-zinc-50 border border-zinc-100 p-4 pl-12 rounded-2xl text-xs font-bold uppercase tracking-widest outline-none focus:ring-2 focus:ring-brand/10 focus:bg-white transition-all shadow-sm"
+                                    placeholder="name@example.com"
+                                    className="w-full bg-white border border-zinc-200 p-4 pl-12 rounded-2xl text-sm font-bold text-dark placeholder:text-zinc-400 outline-none focus:ring-2 focus:ring-brand/10 focus:border-brand transition-all shadow-sm"
                                 />
                             </div>
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 block ml-1">Security Key</label>
+                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 block ml-1">Password</label>
                             <div className="relative group">
-                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-300 group-focus-within:text-brand transition-colors" size={18} />
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-brand transition-colors" size={18} />
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    placeholder="••••••••"
-                                    className="w-full bg-zinc-50 border border-zinc-100 p-4 pl-12 rounded-2xl text-xs font-bold uppercase tracking-widest outline-none focus:ring-2 focus:ring-brand/10 focus:bg-white transition-all shadow-sm"
+                                    placeholder="Enter your password"
+                                    className="w-full bg-white border border-zinc-200 p-4 pl-12 pr-12 rounded-2xl text-sm font-bold text-dark placeholder:text-zinc-400 outline-none focus:ring-2 focus:ring-brand/10 focus:border-brand transition-all shadow-sm"
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-dark transition-colors p-2 z-10"
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
                             </div>
                         </div>
 
                         {error && (
-                            <p className="text-red-500 text-[10px] font-black uppercase tracking-widest text-center bg-red-50 py-3 rounded-xl border border-red-100">
-                                {error}
-                            </p>
+                            <div className="flex items-center gap-3 bg-red-50 border border-red-100 p-4 rounded-xl text-red-600 animate-shake">
+                                <AlertCircle size={18} className="shrink-0" />
+                                <p className="text-[11px] font-bold uppercase tracking-wide">
+                                    {error === 'Invalid login credentials' ? 'Wrong password or email address.' : error}
+                                </p>
+                            </div>
                         )}
 
                         <Button
@@ -212,7 +224,7 @@ const Auth: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                             className="w-full py-5 rounded-2xl shadow-xl hover:shadow-brand/20"
                             isLoading={isLoading}
                         >
-                            Initialize Sync <ArrowRight size={16} />
+                            {mode === 'signin' ? 'Sign In' : 'Register / Create Account'} <ArrowRight size={16} />
                         </Button>
                     </form>
 
@@ -221,10 +233,10 @@ const Auth: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                             onClick={runDiagnostic}
                             className="text-[9px] font-black text-zinc-400 hover:text-brand uppercase tracking-[0.2em] transition-colors"
                         >
-                            Verify Connectivity diagnostic
+                            Verify Information
                         </button>
                         <p className="text-[9px] font-black text-zinc-300 uppercase tracking-[0.4em]">
-                            Vertex Core Security Protocol v2.4.0
+                            Security Level v2.4
                         </p>
                     </div>
                 </div>

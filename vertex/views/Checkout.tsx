@@ -5,11 +5,13 @@ import { mpesaService } from '../services/mpesaService';
 import { orderService } from '../services/orders';
 import { ArrowLeft, Lock, ShieldCheck, Phone, CheckCircle2, AlertCircle, RefreshCw } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
-const Checkout: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+const Checkout: React.FC = () => {
   const { cart, clearCart, user, setProcessing } = useStore();
   const [phoneNumber, setPhoneNumber] = useState(user?.phone_number || '254');
   const [checkoutStatus, setCheckoutStatus] = useState<'IDLE' | 'WAITING_FOR_PUSH' | 'POLLING' | 'SUCCESS' | 'FAILED'>('IDLE');
+  const navigate = useNavigate();
 
   const total = cart.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
 
@@ -58,7 +60,7 @@ const Checkout: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         setTimeout(() => {
           clearCart();
           setProcessing(false);
-          onBack();
+          navigate('/');
         }, 3500);
       } else {
         setCheckoutStatus('FAILED');
@@ -85,19 +87,19 @@ const Checkout: React.FC<{ onBack: () => void }> = ({ onBack }) => {
           <h2 className="text-3xl md:text-5xl font-black tracking-tighter uppercase leading-none text-dark">Registry Updated.</h2>
           <p className="text-zinc-500 text-lg font-medium leading-relaxed max-w-md mx-auto">M-PESA Settlement Verified. Your acquisition is confirmed and entering logistical preparation.</p>
         </div>
-        <Button onClick={onBack} variant="primary" className="px-12 py-5 bg-dark text-white">Return to Registry</Button>
+        <Button onClick={() => navigate('/')} variant="primary" className="px-12 py-5 bg-dark text-white">Return to Registry</Button>
       </div>
     );
   }
 
   return (
     <div className="bg-blueprint blueprint-lines min-h-screen max-w-full overflow-x-hidden">
-      <div className="max-w-screen-2xl mx-auto px-6 py-12 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
+      <div className="max-w-screen-2xl mx-auto px-6 pt-32 pb-12 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
 
         {/* Left Column: Ledger Summary */}
         <div className="space-y-16 order-2 lg:order-1">
           <div className="flex flex-col gap-12">
-            <button onClick={onBack} className="w-fit flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.5em] text-zinc-400 hover:text-dark transition-all group">
+            <button onClick={() => navigate('/')} className="w-fit flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.5em] text-zinc-400 hover:text-dark transition-all group">
               <ArrowLeft size={18} className="group-hover:-translate-x-2 transition-transform" /> Back to Archive
             </button>
 

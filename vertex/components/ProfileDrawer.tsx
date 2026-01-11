@@ -1,17 +1,14 @@
-
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, User, ShoppingBag, Heart, Settings, LogOut, ShieldCheck } from 'lucide-react';
 import { useStore } from '../store';
 import { UserRole } from '../types';
 import { authService } from '../services/auth';
+import { useNavigate } from 'react-router-dom';
 
-interface ProfileDrawerProps {
-  onHome: () => void;
-}
-
-const ProfileDrawer: React.FC<ProfileDrawerProps> = ({ onHome }) => {
+const ProfileDrawer: React.FC = () => {
   const { user, role, setRole, isProfileOpen, setProfileOpen } = useStore();
+  const navigate = useNavigate();
 
   return (
     <AnimatePresence>
@@ -61,7 +58,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({ onHome }) => {
                     icon={<User size={18} />}
                     label="Switch to Store"
                     active={role === UserRole.BUYER}
-                    onClick={() => { setRole(UserRole.BUYER); setProfileOpen(false); onHome(); }}
+                    onClick={() => { setRole(UserRole.BUYER); setProfileOpen(false); navigate('/'); }}
                   />
                   <DrawerItem
                     icon={<ShieldCheck size={18} />}
