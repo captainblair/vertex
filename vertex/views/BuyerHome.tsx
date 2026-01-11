@@ -51,7 +51,7 @@ const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
             }}
             className="space-y-6 opacity-100"
           >
-            <span className="text-white text-[10px] md:text-[12px] font-black uppercase tracking-[1em] md:tracking-[1.5em] opacity-100 block mb-4 technical-shadow-text">Establishing Excellence</span>
+            <span className="text-white text-[10px] md:text-[12px] font-black uppercase tracking-[0.4em] md:tracking-[1.5em] opacity-100 block mb-4 technical-shadow-text text-center">Establishing Excellence</span>
             <h1 className="text-2xl md:text-[140px] font-black text-white leading-[0.85] tracking-tighter uppercase select-none technical-shadow-text">
               THE<br />NEW<br />STANDARD.
             </h1>
@@ -161,7 +161,7 @@ const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
         <div className="absolute top-0 right-0 w-1/2 h-full bg-zinc-900/50 skew-x-12 translate-x-24 pointer-events-none" />
         <div className="max-w-screen-xl mx-auto grid md:grid-cols-2 gap-16 md:gap-32 items-center relative z-10">
           <div className="space-y-10">
-            <span className="text-brand text-[11px] font-black uppercase tracking-[0.8em]">Architectural Vision</span>
+            <span className="text-brand text-[11px] font-black uppercase tracking-[0.4em] md:tracking-[0.8em]">Architectural Vision</span>
             <h3 className="text-2xl md:text-8xl font-black tracking-tighter uppercase leading-[0.85]">
               ENGINEERED <br /> SIMPLICITY.
             </h3>

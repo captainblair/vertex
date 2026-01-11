@@ -7,15 +7,13 @@ const Story: React.FC<{ onShop: () => void }> = ({ onShop }) => {
     return (
         <div className="min-h-screen max-w-full overflow-x-hidden bg-[#F0F0F0] text-dark relative">
             {/* Hero Header */}
-            <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden bg-zinc-900 border-b border-zinc-200 w-full max-w-full">
-                <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-200/30 -skew-x-12 translate-x-12 md:translate-x-24 z-0" />
-
-                <div className="max-w-screen-xl mx-auto grid md:grid-cols-2 gap-16 md:gap-32 items-center relative z-10">
+            <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-white border-b border-zinc-200 w-full max-w-full pt-44 md:pt-64 pb-24">
+                <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-32 items-center px-6 relative z-10">
                     <div className="space-y-12">
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
-                            className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.5em] text-brand border border-brand/30 px-4 py-2 rounded-full"
+                            className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.5em] text-brand border border-brand/30 px-4 py-2 rounded-full"
                         >
                             <ShieldCheck size={14} /> Our Story
                         </motion.div>
@@ -25,7 +23,7 @@ const Story: React.FC<{ onShop: () => void }> = ({ onShop }) => {
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.1 }}
-                                className="text-2xl md:text-8xl font-black uppercase italic tracking-tighter leading-[0.85]"
+                                className="text-4xl md:text-8xl font-black uppercase italic tracking-tighter leading-[0.85] text-dark"
                             >
                                 More Than <br /> Products.
                             </motion.h1>
@@ -33,7 +31,7 @@ const Story: React.FC<{ onShop: () => void }> = ({ onShop }) => {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.2 }}
-                                className="text-brand text-xs font-black uppercase tracking-[0.4em]"
+                                className="text-brand text-sm font-black uppercase tracking-[0.2em] md:tracking-[0.4em]"
                             >
                                 A Standard of Quality.
                             </motion.p>
@@ -46,13 +44,13 @@ const Story: React.FC<{ onShop: () => void }> = ({ onShop }) => {
                             className="space-y-8"
                         >
                             <div className="space-y-4">
-                                <p className="text-xl font-bold leading-tight">
+                                <p className="text-xl md:text-2xl font-bold leading-tight text-dark">
                                     Vertex was founded on one simple idea:<br />
                                     <span className="text-zinc-400">Great products should last, look good, and work reliably.</span>
                                 </p>
                             </div>
-                            <p className="text-zinc-500 text-lg font-medium leading-relaxed max-w-lg">
-                                We design technical and lifestyle essentials that combine durability, clean design, and everyday practicality. Our goal is to create products that fit modern urban life — without cutting corners on quality.
+                            <p className="text-zinc-600 text-lg md:text-xl font-medium leading-relaxed max-w-lg">
+                                We design technical and lifestyle essentials that combine extreme durability, clean brutalist design, and absolute everyday practicality. What started as a search for the perfect backpack evolved into a standard of excellence for everything we create. Our goal is to ensure that whatever you carry, it's built to survive the city and look better with age.
                             </p>
                         </motion.div>
                     </div>
@@ -61,7 +59,7 @@ const Story: React.FC<{ onShop: () => void }> = ({ onShop }) => {
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 1 }}
-                        className="aspect-square rounded-[4rem] overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000 border border-zinc-200"
+                        className="aspect-square rounded-[4rem] overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000 border border-zinc-100"
                     >
                         <img
                             src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200"
@@ -77,7 +75,7 @@ const Story: React.FC<{ onShop: () => void }> = ({ onShop }) => {
                 <div className="max-w-screen-2xl mx-auto">
                     <div className="space-y-16 md:space-y-24">
                         <div className="text-center space-y-4">
-                            <p className="text-brand text-[10px] font-black uppercase tracking-[0.6em]">Foundational Principles</p>
+                            <p className="text-brand text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.6em]">Foundational Principles</p>
                             <h2 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter">Our Design Philosophy</h2>
                         </div>
 
@@ -117,7 +115,7 @@ const Story: React.FC<{ onShop: () => void }> = ({ onShop }) => {
             </section>
 
             {/* Difference Section */}
-            <section className="py-20 md:py-32 px-6 bg-zinc-100">
+            <section className="py-20 md:py-32 px-6 bg-zinc-100 overflow-hidden">
                 <div className="max-w-screen-xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
                     <div className="order-2 md:order-1 relative">
                         <div className="aspect-[4/5] rounded-[3rem] overflow-hidden border border-zinc-200 shadow-xl">
@@ -167,7 +165,7 @@ const Story: React.FC<{ onShop: () => void }> = ({ onShop }) => {
             <section className="py-32 md:py-48 px-6 text-center bg-white relative z-10 border-t border-zinc-100">
                 <div className="max-w-3xl mx-auto space-y-12 md:space-y-16">
                     <div className="space-y-6">
-                        <p className="text-brand text-[10px] font-black uppercase tracking-[0.5em]">The Next Chapter</p>
+                        <p className="text-brand text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.5em]">The Next Chapter</p>
                         <h2 className="text-2xl md:text-5xl font-black uppercase italic tracking-tighter text-dark leading-tight">
                             Join us as we continue to build products that combine function, style, and durability.
                         </h2>

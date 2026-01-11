@@ -76,7 +76,7 @@ const AdminCommandCenter: React.FC<{ onHome: () => void }> = ({ onHome }) => {
       <div className="max-w-screen-2xl mx-auto px-6 md:px-12 py-12 space-y-16">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-12 border-b border-white/5">
           <div className="space-y-3">
-            <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.4em] text-brand">
+            <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-brand">
               <Activity size={14} /> Admin Dashboard
             </div>
             <h1 className="text-2xl md:text-6xl font-black uppercase tracking-tighter leading-none text-white">Control Panel</h1>
@@ -105,7 +105,7 @@ const AdminCommandCenter: React.FC<{ onHome: () => void }> = ({ onHome }) => {
 
             {/* Global Announcement Tool */}
             <div className="bg-zinc-900/50 rounded-3xl p-8 border border-white/5 space-y-6">
-              <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-zinc-500">
+              <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] md:tracking-widest text-zinc-500">
                 <Megaphone size={14} /> Global Announcements
               </div>
               <div className="flex gap-4">
@@ -318,7 +318,7 @@ const StatCard = ({ label, value, icon }: { label: string, value: string, icon: 
       <span className="text-[10px] font-black uppercase tracking-[0.3em]">{label}</span>
       <div className="p-3 bg-white/5 rounded-2xl text-zinc-400">{icon}</div>
     </div>
-    <h4 className="text-4xl font-black tracking-tighter uppercase text-white">{value}</h4>
+    <h4 className="text-2xl md:text-4xl font-black tracking-tighter uppercase text-white">{value}</h4>
   </div>
 );
 

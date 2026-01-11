@@ -32,7 +32,7 @@ const FilterDrawer: React.FC = () => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 30, stiffness: 200 }}
-            className="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-white z-[160] flex flex-col shadow-2xl border-l border-zinc-100"
+            className="fixed top-0 right-0 bottom-0 w-[85vw] max-w-sm bg-white z-[160] flex flex-col shadow-2xl border-l border-zinc-100"
           >
             <div className="p-8 flex justify-between items-center border-b border-zinc-50">
               <div className="flex items-center gap-4">

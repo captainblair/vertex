@@ -78,6 +78,7 @@ const App: React.FC = () => {
         onAuth={() => handleViewChange('auth')}
         onCollections={() => handleViewChange('collections')}
         onStory={() => handleViewChange('story')}
+        darkText={currentView === 'story' || currentView === 'auth'}
       />
       <CartDrawer onCheckout={() => handleViewChange('checkout')} />
       <ProfileDrawer onHome={() => handleViewChange('home')} />

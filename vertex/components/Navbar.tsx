@@ -9,9 +9,10 @@ interface NavbarProps {
   onAuth: () => void;
   onCollections: () => void;
   onStory: () => void;
+  darkText?: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onHome, onAuth, onCollections, onStory }) => {
+const Navbar: React.FC<NavbarProps> = ({ onHome, onAuth, onCollections, onStory, darkText }) => {
   const {
     cart,
     setMenuOpen,
@@ -54,20 +55,20 @@ const Navbar: React.FC<NavbarProps> = ({ onHome, onAuth, onCollections, onStory 
           {/* Architectural Logo */}
           <button
             onClick={onHome}
-            className={`text-xl md:text-2xl font-black tracking-tighter md:tracking-[0.4em] uppercase transition-all duration-700 text-white hover:opacity-80 drop-shadow-md`}
+            className={`text-xl md:text-2xl font-black tracking-tighter md:tracking-[0.4em] uppercase transition-all duration-700 ${scrolled || !darkText ? 'text-white' : 'text-dark'} hover:opacity-80 drop-shadow-md`}
           >
             VERTEX
           </button>
 
           {/* Right Actions */}
           <div className="flex items-center gap-4 md:gap-10">
-            <button className={`p-2 transition-colors duration-500 text-white hover:text-brand`}>
+            <button className={`p-2 transition-colors duration-500 ${scrolled || !darkText ? 'text-white' : 'text-dark'} hover:text-brand`}>
               <Search size={20} strokeWidth={1.5} />
             </button>
 
             <button
               onClick={() => setCartOpen(true)}
-              className={`flex items-center gap-2.5 transition-colors duration-500 text-white hover:text-brand group`}
+              className={`flex items-center gap-2.5 transition-colors duration-500 ${scrolled || !darkText ? 'text-white' : 'text-dark'} hover:text-brand group`}
             >
               <div className="relative">
                 <ShoppingBag size={20} strokeWidth={1.5} />
@@ -92,7 +93,7 @@ const Navbar: React.FC<NavbarProps> = ({ onHome, onAuth, onCollections, onStory 
             {/* Mobile Menu Trigger */}
             <button
               onClick={() => setMenuOpen(true)}
-              className={`lg:hidden transition-colors duration-500 text-white`}
+              className={`lg:hidden transition-colors duration-500 ${scrolled || !darkText ? 'text-white' : 'text-dark'}`}
             >
               <Menu size={24} strokeWidth={1.5} />
             </button>
@@ -103,8 +104,8 @@ const Navbar: React.FC<NavbarProps> = ({ onHome, onAuth, onCollections, onStory 
   );
 };
 
-const NavLink: React.FC<{ children: React.ReactNode, onClick?: () => void }> = ({ children, onClick }) => (
-  <button onClick={onClick} className={`relative text-[10px] font-black uppercase tracking-[0.4em] transition-all duration-500 group py-1 text-white/70 hover:text-white`}>
+const NavLink: React.FC<{ children: React.ReactNode, onClick?: () => void, darkText?: boolean, scrolled?: boolean }> = ({ children, onClick, darkText, scrolled }) => (
+  <button onClick={onClick} className={`relative text-[10px] font-black uppercase tracking-[0.4em] transition-all duration-500 group py-1 ${scrolled || !darkText ? 'text-white/70' : 'text-dark/70'} hover:text-brand`}>
     {children}
     <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1.5px] bg-brand transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-full" />
   </button>
