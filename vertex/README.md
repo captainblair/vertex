@@ -2,7 +2,7 @@
 
 Vertex is a high-end, multi-vendor e-commerce platform engineered for premium architectural aesthetics and technical superiority. The **Blueprint Edition** focuses on "Architectural Symmetry," providing a curated studio gallery experience for elite products.
 
-## 📐 Design Philosophy: The Blueprint Standard
+##  Design Philosophy: The Blueprint Standard
 
 The application follows a minimalist, industrial-grade aesthetic inspired by modern architectural principles and luxury brands like Leica and Bang & Olufsen.
 
