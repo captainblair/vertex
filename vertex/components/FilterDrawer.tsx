@@ -6,11 +6,12 @@ import { useStore } from '../store';
 import Button from './Button';
 
 const COLORS = [
-  { name: 'Graphite', hex: '#27272a' },
-  { name: 'Titanium', hex: '#71717a' },
-  { name: 'Linen', hex: '#fafafa' },
-  { name: 'Emerald', hex: '#059669' },
-  { name: 'Amber', hex: '#f59e0b' },
+  { name: 'Black', hex: '#18181b' },
+  { name: 'White', hex: '#ffffff' },
+  { name: 'Grey', hex: '#71717a' },
+  { name: 'Blue', hex: '#3b82f6' },
+  { name: 'Green', hex: '#22c55e' },
+  { name: 'Orange', hex: '#f97316' },
 ];
 
 const FilterDrawer: React.FC = () => {

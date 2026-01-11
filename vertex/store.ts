@@ -1,8 +1,9 @@
 import { create } from 'zustand';
-import { UserRole, Product, Profile, Category } from './types';
+import { UserRole, Product, Profile, Category, Order } from './types';
 import { supabase } from './services/supabase';
 import { authService } from './services/auth';
 import { productService } from './services/products';
+import { orderService } from './services/orders';
 
 interface CartItem {
   product: Product;
@@ -23,6 +24,7 @@ interface AppState {
   role: UserRole;
   cart: CartItem[];
   products: Product[];
+  orders: Order[]; // Added orders
   draftProduct: DraftProduct;
   isProcessing: boolean;
   isLoading: boolean;
@@ -52,6 +54,7 @@ interface AppState {
 
   // Async Actions
   fetchProducts: () => Promise<void>;
+  fetchOrders: () => Promise<void>; // Added fetchOrders
   initializeAuth: () => void;
 }
 
@@ -60,6 +63,7 @@ export const useStore = create<AppState>((set, get) => ({
   role: UserRole.BUYER,
   cart: [],
   products: [],
+  orders: [], // Init orders
   isProcessing: false,
   isLoading: false,
   searchQuery: '',
@@ -130,6 +134,18 @@ export const useStore = create<AppState>((set, get) => ({
       console.error('Failed to fetch products:', error);
     } finally {
       set({ isLoading: false });
+    }
+  },
+
+  fetchOrders: async () => {
+    const { role } = get();
+    if (role !== UserRole.ADMIN) return;
+
+    try {
+      const data = await orderService.getAllOrders();
+      set({ orders: data });
+    } catch (error) {
+      console.error('Failed to fetch orders:', error);
     }
   },
 

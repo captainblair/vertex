@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStore } from '../store';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Activity, Package, CreditCard, Plus, Save, Megaphone, Trash2, Edit2, Search } from 'lucide-react';
@@ -7,21 +7,16 @@ import { productService } from '../services/products';
 import { useNavigate } from 'react-router-dom';
 import { UserRole } from '../types';
 
-const REVENUE_DATA = [
-  { month: 'JAN', rev: 400000 },
-  { month: 'FEB', rev: 300000 },
-  { month: 'MAR', rev: 550000 },
-  { month: 'APR', rev: 480000 },
-  { month: 'MAY', rev: 700000 },
-  { month: 'JUN', rev: 900000 },
-];
-
 const AdminCommandCenter: React.FC = () => {
-  const { products, isLoading, fetchProducts, announcementText, setAnnouncementText, draftProduct, setDraftProduct, setRole } = useStore();
+  const { products, orders, isLoading, fetchProducts, fetchOrders, announcementText, setAnnouncementText, draftProduct, setDraftProduct, setRole } = useStore();
   const [localAnnouncement, setLocalAnnouncement] = useState(announcementText);
   const [activeTab, setActiveTab] = useState<'inventory' | 'sales' | 'settings'>('inventory');
   const [isCreating, setIsCreating] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchOrders();
+  }, []); // Fetch orders on mount
 
   const handleAnnouncementUpdate = () => {
     setAnnouncementText(localAnnouncement);
@@ -42,6 +37,10 @@ const AdminCommandCenter: React.FC = () => {
         alert("Verification Error: Valid Stock Quantity count is required.");
         return;
       }
+      if (!draftProduct.category) {
+        alert("Verification Error: Please select a valid Product Category.");
+        return;
+      }
 
       await productService.addProduct({
         title: draftProduct.title,
@@ -53,7 +52,7 @@ const AdminCommandCenter: React.FC = () => {
         is_featured: false,
       });
 
-      setDraftProduct({ title: '', description: '', price: '', stock: '', category: 'Lifestyle', image: '' });
+      setDraftProduct({ title: '', description: '', price: '', stock: '', category: '' as any, image: '' });
       setIsCreating(false);
       fetchProducts();
       alert("SUCCESS: New product saved.");
@@ -70,7 +69,32 @@ const AdminCommandCenter: React.FC = () => {
     }
   };
 
-  const totalValuation = products.reduce((acc, p) => acc + (p.price * p.stock), 0);
+  // Real Data Calculations
+  const inventoryValue = products.reduce((acc, p) => acc + (p.price * p.stock), 0);
+  const totalRevenue = orders.reduce((acc, o) => acc + o.total_amount, 0); // Assuming all orders are paid/valid for now
+  const mpesaTotal = orders.filter(o => o.payment_method === 'M-PESA').reduce((acc, o) => acc + o.total_amount, 0);
+
+  // Process Chart Data (Last 6 Months)
+  const chartData = React.useMemo(() => {
+    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    const currentMonth = new Date().getMonth();
+    const last6Months = Array.from({ length: 6 }, (_, i) => {
+      const d = new Date();
+      d.setMonth(currentMonth - (5 - i));
+      return d;
+    });
+
+    return last6Months.map(date => {
+      const monthLabel = months[date.getMonth()];
+      const year = date.getFullYear();
+      const monthOrders = orders.filter(o => {
+        const d = new Date(o.created_at);
+        return d.getMonth() === date.getMonth() && d.getFullYear() === year;
+      });
+      const rev = monthOrders.reduce((acc, o) => acc + o.total_amount, 0);
+      return { month: monthLabel, rev };
+    });
+  }, [orders]);
 
   return (
     <div className="bg-dark min-h-screen max-w-full overflow-x-hidden text-white">
@@ -104,8 +128,8 @@ const AdminCommandCenter: React.FC = () => {
               {/* Stats Bar */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <StatCard label="Active Products" value={`${products.length} Units`} icon={<Package size={24} />} />
-                <StatCard label="Inventory Value" value={`KSh ${(totalValuation / 1000000).toFixed(1)}M`} icon={<Activity size={24} />} />
-                <StatCard label="M-PESA Payments" value="KSh 8.2M" icon={<CreditCard size={24} />} />
+                <StatCard label="Inventory Value" value={`KSh ${(inventoryValue / 1000000).toFixed(2)}M`} icon={<Activity size={24} />} />
+                <StatCard label="M-PESA Revenue" value={`KSh ${mpesaTotal.toLocaleString()}`} icon={<CreditCard size={24} />} />
               </div>
 
               {/* Global Announcement Tool */}
@@ -189,6 +213,7 @@ const AdminCommandCenter: React.FC = () => {
                         onChange={(e) => setDraftProduct({ ...draftProduct, category: e.target.value as any })}
                         className="w-full bg-zinc-900 border border-white/5 p-4 rounded-xl text-xs font-bold uppercase tracking-widest text-white outline-none focus:ring-1 focus:ring-brand/50"
                       >
+                        <option value="">Select Category</option>
                         <option value="Electronics">Electronics</option>
                         <option value="Fashion">Fashion</option>
                         <option value="Home & Living">Home & Living</option>
@@ -197,7 +222,7 @@ const AdminCommandCenter: React.FC = () => {
                         <option value="Sports & Outdoors">Sports & Outdoors</option>
                         <option value="Automotive">Automotive</option>
                         <option value="Phones & Tablets">Phones & Tablets</option>
-                        <option value="Lifestyle">Lifestyle (Legacy)</option>
+                        <option value="Lifestyle">Lifestyle</option>
                       </select>
                       <div className="pt-4">
                         <Button variant="cta" onClick={handleCreateProduct} className="w-full py-5"><Plus size={18} /> Save Product</Button>
@@ -256,18 +281,21 @@ const AdminCommandCenter: React.FC = () => {
                 <div className="bg-zinc-900/30 border border-white/5 rounded-3xl p-8 space-y-8">
                   <h3 className="text-sm font-black uppercase tracking-[0.2em] border-b border-white/5 pb-6 text-white">Recent Payments</h3>
                   <div className="space-y-6">
-                    {[1, 2, 3, 4, 5].map(i => (
-                      <div key={i} className="flex items-center justify-between p-4 hover:bg-white/5 rounded-2xl transition-all">
+                    {orders.slice(0, 5).map(order => (
+                      <div key={order.id} className="flex items-center justify-between p-4 hover:bg-white/5 rounded-2xl transition-all">
                         <div className="flex items-center gap-4">
                           <div className="p-3 bg-brand/10 rounded-full text-brand"><CreditCard size={18} /></div>
                           <div>
-                            <p className="text-xs font-black uppercase text-white">M-PESA / {Math.random().toString(36).substr(2, 10).toUpperCase()}</p>
-                            <p className="text-[9px] text-zinc-500 uppercase tracking-widest">M-PESA Payments • 2 mins ago</p>
+                            <p className="text-xs font-black uppercase text-white">M-PESA / {order.id.slice(0, 8).toUpperCase()}</p>
+                            <p className="text-[9px] text-zinc-500 uppercase tracking-widest">
+                              {new Date(order.created_at).toLocaleDateString()} • {new Date(order.created_at).toLocaleTimeString()}
+                            </p>
                           </div>
                         </div>
-                        <span className="text-sm font-mono font-bold text-brand">+KSh 14,500</span>
+                        <span className="text-sm font-mono font-bold text-brand">+KSh {order.total_amount.toLocaleString()}</span>
                       </div>
                     ))}
+                    {orders.length === 0 && <p className="text-zinc-500 text-xs italic">No recent transactions found.</p>}
                   </div>
                 </div>
               </div>
@@ -275,7 +303,7 @@ const AdminCommandCenter: React.FC = () => {
                 <h3 className="text-sm font-black uppercase tracking-[0.2em] opacity-30">Monthly Velocity</h3>
                 <div className="h-[300px]">
                   <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={REVENUE_DATA}>
+                    <BarChart data={chartData}>
                       <XAxis dataKey="month" hide />
                       <Tooltip
                         cursor={{ fill: 'rgba(255,255,255,0.05)' }}
@@ -288,9 +316,9 @@ const AdminCommandCenter: React.FC = () => {
                 <div className="pt-6 border-t border-white/10 flex justify-between items-end">
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-widest opacity-40">Total Revenue</p>
-                    <h4 className="text-2xl font-black tracking-tighter">KSh 42.8M</h4>
+                    <h4 className="text-2xl font-black tracking-tighter">KSh {totalRevenue.toLocaleString()}</h4>
                   </div>
-                  <span className="text-brand text-[10px] font-black uppercase">+24%</span>
+                  <span className="text-brand text-[10px] font-black uppercase">REAL-TIME</span>
                 </div>
               </div>
             </div>

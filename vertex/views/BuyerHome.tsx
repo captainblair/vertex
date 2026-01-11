@@ -4,16 +4,7 @@ import { Product } from '../types';
 import { Plus, ShieldCheck, ArrowRight, SlidersHorizontal, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const MOCK_PRODUCTS: Product[] = [
-  { id: 'p1', title: 'Carbon Node / Phone Zero', description: 'Structural precision met with technical superiority. Titanium skeleton.', price: 174000, stock: 12, image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&q=80&w=800', category: 'Electronics', is_approved: true, vendor_name: 'Vertex' },
-  { id: 'p2', title: '01 Linen Tunic / Graphite', description: 'Architectural silhouette carved from heavyweight Belgian linen.', price: 14500, stock: 45, image: 'https://images.unsplash.com/photo-1594932224010-74f43a054652?auto=format&fit=crop&q=80&w=800', category: 'Fashion', is_approved: true, vendor_name: 'Vertex' },
-  { id: 'p3', title: 'Modular Glass Vessel', description: 'Hand-blown technical glass for structural hydration.', price: 5900, stock: 20, image: 'https://images.unsplash.com/photo-1585776245991-cf89dd7fc53e?auto=format&fit=crop&q=80&w=800', category: 'Lifestyle', is_approved: true, vendor_name: 'Vertex' },
-  { id: 'p4', title: 'Brushed Aluminum Node', description: 'Wireless audio node with noise suppression protocols.', price: 32000, stock: 15, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=800', category: 'Electronics', is_approved: true, vendor_name: 'Vertex' },
-  { id: 'p5', title: 'Apex Titanium Chronograph', description: 'Precision time-keeping node. Industrial-grade assembly.', price: 89000, stock: 5, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800', category: 'Electronics', is_approved: true, vendor_name: 'Vertex' },
-  { id: 'p6', title: 'Tech-Shell / Waterproof 02', description: 'Gore-Tex membrane with laser-welded seams.', price: 28500, stock: 18, image: 'https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&q=80&w=800', category: 'Fashion', is_approved: true, vendor_name: 'Vertex' },
-  { id: 'p7', title: 'Concrete Base Lamp', description: 'Brutalist illumination for architectural spaces.', price: 12500, stock: 8, image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&q=80&w=800', category: 'Lifestyle', is_approved: true, vendor_name: 'Vertex' },
-  { id: 'p8', title: 'Ceramic Serving Set', description: 'Minimalist dining nodes with matte obsidian finish.', price: 8200, stock: 30, image: 'https://images.unsplash.com/photo-1578749553375-8785836d31bc?auto=format&fit=crop&q=80&w=800', category: 'Lifestyle', is_approved: true, vendor_name: 'Vertex' },
-];
+
 
 const BuyerHome: React.FC = () => {
   const { products, isLoading, addToCart, activeCategory, setActiveCategory, setFilterOpen } = useStore();
@@ -98,18 +89,18 @@ const BuyerHome: React.FC = () => {
           {/* Scrollable Container with Faders */}
           <div className="relative flex-grow flex items-center overflow-hidden">
             {/* Left Fader */}
-            <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-[#F4F4F5] to-transparent z-20 pointer-events-none" />
+            <div className="absolute left-0 top-0 bottom-0 w-6 md:w-12 bg-gradient-to-r from-[#F4F4F5] to-transparent z-20 pointer-events-none" />
 
             {/* Main Category Slider */}
-            <div className="flex gap-3 md:gap-4 overflow-x-auto hide-scrollbar scroll-smooth py-2 px-6">
+            <div className="flex gap-3 md:gap-4 overflow-x-auto hide-scrollbar scroll-smooth py-2 px-4 md:px-6 w-full">
               {['All', 'Electronics', 'Fashion', 'Home & Living', 'Health & Beauty', 'Supermarket', 'Sports & Outdoors', 'Automotive', 'Phones & Tablets'].map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat as any)}
-                  className={`relative px-6 py-2.5 text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 z-10 whitespace-nowrap rounded-full ${activeCategory === cat ? 'text-white' : 'text-zinc-400 hover:text-dark hover:bg-zinc-200/50'
+                  className={`relative px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 z-10 whitespace-nowrap rounded-full shrink-0 ${activeCategory === cat ? 'text-white' : 'text-zinc-400 hover:text-dark hover:bg-zinc-200/50'
                     }`}
                 >
-                  {cat === 'All' ? 'Main category' : cat}
+                  {cat === 'All' ? 'All' : cat}
                   {activeCategory === cat && (
                     <motion.div
                       layoutId="dept-capsule"
@@ -122,7 +113,7 @@ const BuyerHome: React.FC = () => {
             </div>
 
             {/* Right Fader */}
-            <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#F4F4F5] to-transparent z-20 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-6 md:w-12 bg-gradient-to-l from-[#F4F4F5] to-transparent z-20 pointer-events-none" />
           </div>
 
           <div className="h-8 w-px bg-zinc-200 hidden md:block" />

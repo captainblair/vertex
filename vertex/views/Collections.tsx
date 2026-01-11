@@ -6,8 +6,11 @@ import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 
 const Collections: React.FC = () => {
-    const { setActiveCategory } = useStore();
+    const { setActiveCategory, products } = useStore();
     const navigate = useNavigate();
+
+    // Helper to get count
+    const getCount = (cat: string) => products.filter(p => p.category === cat).length;
 
     const collections = [
         {
@@ -15,7 +18,7 @@ const Collections: React.FC = () => {
             title: 'Technical Nodes',
             tagline: 'High-performance electronics and advanced mobile interfaces.',
             image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800',
-            count: '18 Objects',
+            count: `${getCount('Electronics')} Objects`,
             icon: <Zap size={20} />,
             category: 'Electronics' as const
         },
@@ -24,7 +27,7 @@ const Collections: React.FC = () => {
             title: 'Structural Fashion',
             tagline: 'Architectural silhouettes carved for the urban landscape.',
             image: 'https://images.unsplash.com/photo-1594932224010-74f43a054652?auto=format&fit=crop&q=80&w=800',
-            count: '14 Objects',
+            count: `${getCount('Fashion')} Objects`,
             icon: <Layers size={20} />,
             category: 'Fashion' as const
         },
@@ -33,7 +36,7 @@ const Collections: React.FC = () => {
             title: 'Living Essentials',
             tagline: 'Refining the interior node with brutalist purity.',
             image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&q=80&w=800',
-            count: '22 Objects',
+            count: `${getCount('Home & Living')} Objects`,
             icon: <Box size={20} />,
             category: 'Home & Living' as const
         }

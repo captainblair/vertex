@@ -54,6 +54,24 @@ export const orderService = {
         }));
     },
 
+    async getAllOrders(): Promise<Order[]> {
+        const { data, error } = await supabase
+            .from('orders')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        return data.map((item: any) => ({
+            id: item.id,
+            buyer_id: item.user_id,
+            total_amount: item.total_amount,
+            status: item.status,
+            payment_method: 'M-PESA',
+            created_at: item.created_at,
+        }));
+    },
+
     async logMpesaTransaction(orderId: string, merchantRequestId: string, checkoutRequestId: string, amount: number) {
         const { error } = await supabase
             .from('mpesa_transactions')
