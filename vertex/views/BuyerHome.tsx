@@ -166,10 +166,10 @@ const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
               ENGINEERED <br /> SIMPLICITY.
             </h3>
             <p className="text-zinc-500 text-xl font-light leading-relaxed max-w-lg">
-              Vertex is a singular vision of quality. We curate objects that redefine technical performance through minimalist architectural principles.
+              Vertex is built on one principle: quality that lasts. We design products that combine reliability, modern style, and practical functionality.
             </p>
             <button className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.5em] group hover:text-brand transition-colors">
-              The Manifest <div className="w-12 h-px bg-brand transition-all group-hover:w-20" />
+              Our Vision: Simple. Durable. Exceptional. <div className="w-12 h-px bg-brand transition-all group-hover:w-20" />
             </button>
           </div>
           <div className="aspect-[4/5] rounded-[4rem] overflow-hidden shadow-2xl grayscale brightness-75 hover:grayscale-0 hover:brightness-100 transition-all duration-[2s]">
