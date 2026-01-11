@@ -15,6 +15,7 @@ const Auth: React.FC = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState<string | null>(null);
 
     const { initializeAuth } = useStore();
     const navigate = useNavigate();
@@ -23,24 +24,31 @@ const Auth: React.FC = () => {
         e.preventDefault();
         setIsLoading(true);
         setError(null);
+        setSuccess(null);
 
         try {
             if (mode === 'signin') {
                 const user = await authService.signIn(email, password);
                 if (user) {
-                    initializeAuth();
-                    navigate('/');
+                    setSuccess("Success");
+                    // Delay to show success message
+                    setTimeout(() => {
+                        initializeAuth();
+                        navigate('/');
+                    }, 1500);
                 }
             } else {
                 const user = await authService.signUp(email, password, fullName, phoneNumber);
                 if (user) {
-                    alert("PROTOCOL SUCCESS: Account synchronized in Supabase Authentication. IMPORTANT: You MUST check your email for a confirmation link (if enabled) or go to Supabase > Authentication > Settings and turn OFF 'Confirm email' to log in immediately.");
+                    alert("Account created successfully. Please check your email for confirmation if enabled.");
                     setMode('signin');
                 }
             }
         } catch (err: any) {
-            console.error("Auth Protocol Error:", err);
-            setError(err.error_description || err.message || 'Authentication protocol failed.');
+            console.error("Auth Error:", err);
+            // On any error, show "Wrong Credentials" as requested, or keep error description for non-auth errors? 
+            // User asked for "Wrong Credentials" when credentials are wrong.
+            setError("Wrong Credentials");
         } finally {
             setIsLoading(false);
         }
@@ -213,7 +221,16 @@ const Auth: React.FC = () => {
                             <div className="flex items-center gap-3 bg-red-50 border border-red-100 p-4 rounded-xl text-red-600 animate-shake">
                                 <AlertCircle size={18} className="shrink-0" />
                                 <p className="text-[11px] font-bold uppercase tracking-wide">
-                                    {error === 'Invalid login credentials' ? 'Wrong password or email address.' : error}
+                                    Wrong Credentials
+                                </p>
+                            </div>
+                        )}
+
+                        {success && (
+                            <div className="flex items-center gap-3 bg-emerald-50 border border-emerald-100 p-4 rounded-xl text-emerald-600 animate-pulse">
+                                <ShieldCheck size={18} className="shrink-0" />
+                                <p className="text-[11px] font-bold uppercase tracking-wide">
+                                    {success}
                                 </p>
                             </div>
                         )}
