@@ -204,8 +204,8 @@ const ProductCard: React.FC<{ product: Product, onAdd: () => void }> = ({ produc
         />
       </div>
 
-      {/* Silent Action Slide-Up: Added Price Visibility */}
-      <div className="absolute bottom-0 left-0 right-0 z-30 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] p-5">
+      {/* Silent Action Slide-Up: Always visible on mobile, hover on desktop */}
+      <div className="absolute bottom-0 left-0 right-0 z-30 translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] p-5">
         <button
           onClick={onAdd}
           className="w-full bg-dark text-white py-4.5 rounded-full text-[10px] font-black uppercase tracking-[0.4em] shadow-2xl hover:bg-zinc-800 transition-colors flex items-center justify-center gap-3"
