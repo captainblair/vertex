@@ -151,7 +151,7 @@ const Checkout: React.FC = () => {
               <div className="p-8 bg-zinc-50 border border-zinc-100 rounded-[2.5rem] flex items-center justify-between group cursor-default shadow-inner">
                 <div className="flex items-center gap-8">
                   <div className="p-3 bg-zinc-100/50 rounded-2xl border border-zinc-100 shadow-sm">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/M-PESA_logo.png" className="h-6 grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000" alt="M-PESA" />
+                    <img src="https://mobilemoneyafrica.com/index.php/cdn/media/photos/shares/mpesa.png?w=738&h=452&fit=fit" className="h-12 w-12" alt="M-PESA" />
                   </div>
                   <div className="space-y-1">
                     <span className="text-[11px] font-black uppercase tracking-[0.2em] text-dark">M-PESA Payment</span>
