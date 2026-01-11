@@ -6,24 +6,24 @@ Vertex is a high-end, multi-vendor e-commerce platform engineered for premium ar
 
 The application follows a minimalist, industrial-grade aesthetic inspired by modern architectural principles and luxury brands like Leica and Bang & Olufsen.
 
-### 🏗️ 1. The Kinetic Hero: "Constant Bold Glide"
+### 1. The Kinetic Hero: "Constant Bold Glide"
 - **Motion Logic**: Constant vertical floating animation for headlines (Y-axis: +/- 15px).
 - **Typography**: Bold, high-contrast white text (z-index: 20) with a technical drop-shadow for razor-sharp readability against the "untouchable" hero imagery.
 - **Architectural Seams**: A clean 1px horizontal zinc-200 line provides a "hard cut" transition from the cinematic hero to the studio archive.
 
-### 🏛️ 2. The Studio Gallery: "Architectural Symmetry"
+###  2. The Studio Gallery: "Architectural Symmetry"
 - **Uniform Place Cards**: Every product card is identical in size, ensuring a rhythmic, predictable grid.
 - **Strict Aspect Ratios**: Product imagery is locked to a 4:5 portrait aspect ratio with `object-cover` or technical `object-contain` for electronics.
 - **The Blueprint Grid**: The background uses a technical off-white (#F5F5F7) overlaid with 0.5px vertical and horizontal ledger lines (80px square grid).
 - **The Plinth Effect**: Each card features a razor-thin border and subtle shadow. Hovering triggers a tactile "lift" (Y: -6px) and a deepened shadow.
 
-### ⚡ 3. Premium Interactions
+###  3. Premium Interactions
 - **Silent Actions**: "Add to Bag" buttons are hidden by default to maintain grid purity. On hover, a sleek Zinc-900 bar slides up with the specific SKU price.
 - **Department Sub-Nav**: A sticky horizontal category bar featuring a "Liquid Capsule" indicator that slides smoothly between technical verticals (Electronics, Apparel, Lifestyle).
 
 ---
 
-## 🔒 Security & M-PESA Integration: "The Vault"
+##  Security & M-PESA Integration: "The Vault"
 
 The payment experience is designed as a high-security node interaction.
 
@@ -36,7 +36,7 @@ The payment experience is designed as a high-security node interaction.
 
 ---
 
-## 🛠️ Technical Architecture
+##  Technical Architecture
 
 ### Core Stack
 - **Framework**: React 19
@@ -53,10 +53,10 @@ The payment experience is designed as a high-security node interaction.
 
 ---
 
-## 📱 Mobile Experience: "Extreme Good" Preservation
+## Mobile Experience: "Extreme Good" Preservation
 The mobile layout maintains a search-dominant bottom-dock navigation while adopting the Blueprint Edition's uniform grid logic (2-column symmetry). The Kinetic Hero glide is optimized for mobile refresh rates.
 
-## 📋 Data Structures
+##  Data Structures
 - **Product Registry**: Includes ID, Title, Description, Price (KSh), Stock, Category, and Featured Status.
 - **User Roles**: Strictly partitioned into `BUYER` and `ADMIN` roles using Supabase-ready logic.
 - **Order Archive**: Tracks transaction IDs, settlement status, and buyer node IDs.
