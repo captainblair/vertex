@@ -81,12 +81,18 @@ const Footer: React.FC = () => {
             <FooterLink>Shipping Policy</FooterLink>
             <FooterLink>Returns</FooterLink>
             <FooterLink>M-PESA Support</FooterLink>
+            <li>
+              <a href="tel:+254111414441" className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 hover:text-brand transition-colors block">
+                Contact Us: +254-111-414-441
+              </a>
+            </li>
           </ul>
         </div>
       </div>
 
       <div className="max-w-screen-2xl mx-auto mt-32 pt-12 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-8 text-[9px] font-black text-zinc-600 uppercase tracking-[0.4em]">
         <span>Vertex © 2026. All Rights Reserved.</span>
+        <span className="text-zinc-500">Blair made this with love ♥️</span>
         <div className="flex gap-12">
           <a href="#" className="hover:text-white transition-colors">Privacy</a>
           <a href="#" className="hover:text-white transition-colors">Terms</a>
