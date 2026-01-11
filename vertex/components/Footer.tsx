@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Facebook, Instagram, Linkedin } from 'lucide-react';
+import { Facebook, Github, Linkedin } from 'lucide-react';
 
 const FooterLink: React.FC<{ children: React.ReactNode, onClick?: () => void }> = ({ children, onClick }) => (
   <li>
@@ -8,10 +8,15 @@ const FooterLink: React.FC<{ children: React.ReactNode, onClick?: () => void }> 
   </li>
 );
 
-const SocialIcon: React.FC<{ icon: React.ReactNode }> = ({ icon }) => (
-  <button className="w-12 h-12 border border-zinc-800 rounded-full flex items-center justify-center hover:bg-brand hover:border-brand transition-all text-white">
+const SocialIcon: React.FC<{ icon: React.ReactNode, href: string }> = ({ icon, href }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="w-12 h-12 border border-zinc-800 rounded-full flex items-center justify-center hover:bg-brand hover:border-brand transition-all text-white"
+  >
     {icon}
-  </button>
+  </a>
 );
 
 const XLogo = () => (
@@ -32,10 +37,10 @@ const Footer: React.FC<{ onStory: () => void, onCollections: () => void }> = ({ 
             A modern standard for technical and lifestyle essentials. Designed in Nairobi. Built for everyday life.
           </p>
           <div className="flex gap-4">
-            <SocialIcon icon={<XLogo />} />
-            <SocialIcon icon={<Linkedin size={16} />} />
-            <SocialIcon icon={<Instagram size={16} />} />
-            <SocialIcon icon={<Facebook size={16} />} />
+            <SocialIcon icon={<XLogo />} href="https://x.com/Tony_Blair01" />
+            <SocialIcon icon={<Linkedin size={16} />} href="https://www.linkedin.com/in/tony-wangolo-545b23285/" />
+            <SocialIcon icon={<Github size={16} />} href="https://github.com/captainblair/" />
+            <SocialIcon icon={<Facebook size={16} />} href="https://x.com/Tony_Blair01" />
           </div>
         </div>
 
