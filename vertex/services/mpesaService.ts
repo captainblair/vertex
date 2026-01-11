@@ -12,30 +12,57 @@ export const mpesaService = {
    * Mock STK Push request
    */
   async triggerStkPush(phoneNumber: string, amount: number): Promise<StkPushResponse> {
-    console.log(`[Daraja API] Triggering STK Push for ${phoneNumber} - Amount: KES ${amount}`);
-    
-    // Simulate API latency
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    console.log(`[Vertex] Triggering Real STK Push for ${phoneNumber}`);
 
-    // Return mock success
-    return {
-      MerchantRequestID: `MRID-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
-      CheckoutRequestID: `CRID-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
-      ResponseCode: "0",
-      ResponseDescription: "Success. Request accepted for processing",
-      CustomerMessage: "Success. Request accepted for processing"
-    };
+    try {
+      const response = await fetch('http://localhost:3001/api/stkpush', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ phoneNumber, amount }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Payment Server Error');
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("M-PESA Error:", error);
+      throw error;
+    }
   },
 
   /**
    * Mock verification of payment callback
    */
   async verifyPayment(checkoutRequestId: string): Promise<'SUCCESS' | 'FAILED' | 'PENDING'> {
-    // Simulate polling logic
-    console.log(`[Daraja API] Polling status for ${checkoutRequestId}...`);
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    
-    // 90% chance of success for demo purposes
-    return Math.random() > 0.1 ? 'SUCCESS' : 'FAILED';
+    console.log(`[Vertex] Polling status for ${checkoutRequestId}...`);
+
+    let attempts = 0;
+    const maxAttempts = 30; // Poll for 60 seconds (30 * 2s)
+
+    while (attempts < maxAttempts) {
+      try {
+        const response = await fetch(`http://localhost:3001/api/status/${checkoutRequestId}`);
+        const data = await response.json();
+
+        if (data.status === 'SUCCESS') return 'SUCCESS';
+        if (data.status === 'FAILED') return 'FAILED';
+
+        // If PENDING or UNKNOWN (early polling), wait and retry
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        attempts++;
+      } catch (error) {
+        console.error("Polling Error:", error);
+        // Continue trying even if one request fails
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        attempts++;
+      }
+    }
+
+    return 'FAILED'; // Timeout
   }
 };
