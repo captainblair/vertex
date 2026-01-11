@@ -2,41 +2,52 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Layers, Box, Zap, ShoppingBag } from 'lucide-react';
+import { useStore } from '../store';
 import Button from '../components/Button';
 
 const Collections: React.FC<{ onShop: () => void }> = ({ onShop }) => {
+    const { setActiveCategory } = useStore();
+
     const collections = [
         {
-            id: 'apparel-01',
-            title: 'Technical Apparel',
-            tagline: 'Precision engineered for the urban climate.',
-            image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&q=80&w=800',
-            count: '12 Objects',
-            icon: <Layers size={20} />
-        },
-        {
-            id: 'modular-01',
-            title: 'Modular Objects',
-            tagline: 'Form follows function in every dimension.',
+            id: 'tech-nodes-01',
+            title: 'Technical Nodes',
+            tagline: 'High-performance electronics and advanced mobile interfaces.',
             image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800',
-            count: '08 Objects',
-            icon: <Box size={20} />
+            count: '18 Objects',
+            icon: <Zap size={20} />,
+            category: 'Electronics' as const
         },
         {
-            id: 'lifestyle-01',
-            title: 'Lifestyle Archive',
-            tagline: 'Essentials for the modern technician.',
-            image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=800',
-            count: '15 Objects',
-            icon: <Zap size={20} />
+            id: 'structural-fashion-01',
+            title: 'Structural Fashion',
+            tagline: 'Architectural silhouettes carved for the urban landscape.',
+            image: 'https://images.unsplash.com/photo-1594932224010-74f43a054652?auto=format&fit=crop&q=80&w=800',
+            count: '14 Objects',
+            icon: <Layers size={20} />,
+            category: 'Fashion' as const
+        },
+        {
+            id: 'living-environment-01',
+            title: 'Living Essentials',
+            tagline: 'Refining the interior node with brutalist purity.',
+            image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&q=80&w=800',
+            count: '22 Objects',
+            icon: <Box size={20} />,
+            category: 'Home & Living' as const
         }
     ];
 
+    const handleCollectionClick = (category: any) => {
+        setActiveCategory(category);
+        onShop();
+    };
+
     return (
-        <div className="min-h-screen bg-[#F0F0F0] text-dark relative">
+        <div className="min-h-screen max-w-full overflow-x-hidden bg-[#F0F0F0] text-dark relative">
             {/* Hero Header */}
-            <section className="relative h-[70vh] flex items-center justify-center overflow-hidden bg-zinc-900">
-                <div className="absolute inset-0 z-0">
+            <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden bg-zinc-900 shadow-2xl">
+                <div className="absolute inset-0 z-0 text-white">
                     <img
                         src="https://images.unsplash.com/photo-1441984276008-2e06990d1656?auto=format&fit=crop&q=80&w=2000"
                         className="w-full h-full object-cover opacity-60 grayscale scale-105"
@@ -57,7 +68,7 @@ const Collections: React.FC<{ onShop: () => void }> = ({ onShop }) => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-6xl md:text-8xl font-black uppercase italic tracking-tighter text-white leading-none"
+                        className="text-2xl md:text-8xl font-black uppercase italic tracking-tighter text-white leading-none"
                     >
                         Curated <br /> Collections
                     </motion.h1>
@@ -65,7 +76,7 @@ const Collections: React.FC<{ onShop: () => void }> = ({ onShop }) => {
             </section>
 
             {/* Collections Grid */}
-            <section className="max-w-screen-2xl mx-auto px-6 md:px-20 py-32">
+            <section className="max-w-screen-2xl mx-auto px-6 md:px-20 py-20 md:py-32">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                     {collections.map((collection, index) => (
                         <motion.div
@@ -75,7 +86,7 @@ const Collections: React.FC<{ onShop: () => void }> = ({ onShop }) => {
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
                             className="group cursor-pointer"
-                            onClick={onShop}
+                            onClick={() => handleCollectionClick(collection.category)}
                         >
                             <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-zinc-100 mb-8 shadow-2xl">
                                 <img
@@ -108,9 +119,9 @@ const Collections: React.FC<{ onShop: () => void }> = ({ onShop }) => {
             </section>
 
             {/* CTA Section */}
-            <section className="bg-zinc-200/30 py-32 px-6">
+            <section className="bg-zinc-200/30 py-20 md:py-32 px-6">
                 <div className="max-w-4xl mx-auto text-center space-y-12">
-                    <h2 className="text-4xl font-black uppercase tracking-tighter italic text-dark">
+                    <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tighter italic text-dark">
                         Looking for something specific?
                     </h2>
                     <p className="text-zinc-500 text-sm font-medium leading-loose tracking-tight max-w-xl mx-auto">

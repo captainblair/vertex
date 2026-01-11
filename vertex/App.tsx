@@ -67,7 +67,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col font-sans selection:bg-brand/20 ${role === UserRole.ADMIN ? 'bg-dark' : 'bg-bone'}`}>
+    <div className={`min-h-screen max-w-full overflow-x-hidden flex flex-col font-sans selection:bg-brand/20 ${role === UserRole.ADMIN ? 'bg-dark' : 'bg-bone'}`}>
       {/* Global Announcement Bar */}
       <div className="bg-dark text-white text-[10px] font-black uppercase tracking-[0.3em] py-2.5 px-4 text-center z-[110] relative">
         {announcementText}
@@ -90,13 +90,13 @@ const App: React.FC = () => {
       />
 
       <main className="flex-grow z-0">
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="popLayout">
           <motion.div
             key={`${currentView}-${role}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="w-full min-h-screen"
           >
             {renderView()}

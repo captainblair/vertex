@@ -22,14 +22,14 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({ onHome }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setProfileOpen(false)}
-            className="fixed inset-0 bg-black/40 z-[110]"
+            className="fixed inset-0 bg-black/60 z-[150]"
           />
           <motion.aside
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-zinc-50 z-[120] flex flex-col shadow-2xl border-l border-zinc-100"
+            className="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-white z-[160] flex flex-col shadow-2xl border-l border-zinc-100"
           >
             <div className="p-8 flex justify-between items-center border-b border-zinc-50">
               <div className="flex items-center gap-4">
@@ -47,25 +47,25 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({ onHome }) => {
             </div>
 
             <div className="flex-grow p-6 space-y-2">
-              <div className="px-4 py-4 text-[9px] font-black text-zinc-300 uppercase tracking-[0.4em]">Personal Node</div>
-              <DrawerItem icon={<ShoppingBag size={18} />} label="Archive History" />
-              <DrawerItem icon={<Heart size={18} />} label="Saved Objects" />
-              <DrawerItem icon={<Settings size={18} />} label="Security Settings" />
+              <div className="px-4 py-4 text-[9px] font-black text-zinc-300 uppercase tracking-[0.4em]">My Account</div>
+              <DrawerItem icon={<ShoppingBag size={18} />} label="Order History" />
+              <DrawerItem icon={<Heart size={18} />} label="Saved Items" />
+              <DrawerItem icon={<Settings size={18} />} label="Security" />
 
               <div className="my-8 border-t border-zinc-50" />
 
               {user?.role === 'admin' && (
                 <>
-                  <div className="px-4 py-4 text-[9px] font-black text-zinc-300 uppercase tracking-[0.4em]">Admin Access</div>
+                  <div className="px-4 py-4 text-[9px] font-black text-zinc-300 uppercase tracking-[0.4em]">Admin Panel</div>
                   <DrawerItem
                     icon={<User size={18} />}
-                    label="Storefront Mode"
+                    label="Switch to Store"
                     active={role === UserRole.BUYER}
                     onClick={() => { setRole(UserRole.BUYER); setProfileOpen(false); onHome(); }}
                   />
                   <DrawerItem
                     icon={<ShieldCheck size={18} />}
-                    label="Command Center"
+                    label="Dashboard"
                     active={role === UserRole.ADMIN}
                     onClick={() => { setRole(UserRole.ADMIN); setProfileOpen(false); }}
                   />
@@ -86,7 +86,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({ onHome }) => {
                 className="flex items-center gap-4 w-full p-4 text-dark font-black text-[10px] uppercase tracking-[0.3em] hover:bg-white rounded-2xl shadow-sm transition-all border border-transparent hover:border-zinc-100 group"
               >
                 <LogOut size={16} className="text-zinc-400 group-hover:text-red-500 transition-colors" />
-                <span>Sign Out Protocol</span>
+                <span>Sign Out</span>
               </button>
             </div>
           </motion.aside>

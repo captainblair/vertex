@@ -23,7 +23,7 @@ const Footer: React.FC<{ onStory: () => void, onCollections: () => void }> = ({ 
         <div className="space-y-8">
           <h2 className="text-4xl font-black tracking-tighter text-white">VERTEX</h2>
           <p className="text-xs font-light text-zinc-500 leading-relaxed uppercase tracking-widest">
-            A singular standard for technical essentials. Engineered in Nairobi. Built for the global archive.
+            A modern standard for technical and lifestyle essentials. Designed in Nairobi. Built for everyday life.
           </p>
           <div className="flex gap-4">
             <SocialIcon icon={<Facebook size={16} />} />
@@ -32,14 +32,14 @@ const Footer: React.FC<{ onStory: () => void, onCollections: () => void }> = ({ 
           </div>
         </div>
 
-        {/* Collections */}
+        {/* Products */}
         <div className="space-y-8">
-          <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-300">Archives</h4>
+          <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-300">Products</h4>
           <ul className="space-y-4">
-            <FooterLink onClick={onCollections}>Technical Node</FooterLink>
-            <FooterLink onClick={onCollections}>Apparel 01</FooterLink>
-            <FooterLink onClick={onCollections}>Modular Objects</FooterLink>
-            <FooterLink onClick={onCollections}>Limited Release</FooterLink>
+            <FooterLink onClick={onCollections}>Electronics</FooterLink>
+            <FooterLink onClick={onCollections}>Fashion</FooterLink>
+            <FooterLink onClick={onCollections}>Home & Living</FooterLink>
+            <FooterLink onClick={onCollections}>New Arrivals</FooterLink>
           </ul>
         </div>
 
@@ -47,10 +47,9 @@ const Footer: React.FC<{ onStory: () => void, onCollections: () => void }> = ({ 
         <div className="space-y-8">
           <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-300">Company</h4>
           <ul className="space-y-4">
-            <FooterLink onClick={onStory}>Our Story</FooterLink>
+            <FooterLink onClick={onStory}>About Us</FooterLink>
             <FooterLink>Sustainability</FooterLink>
-            <FooterLink>Verified Protocol</FooterLink>
-            <FooterLink>Press Archive</FooterLink>
+            <FooterLink>News</FooterLink>
           </ul>
         </div>
 
@@ -60,8 +59,8 @@ const Footer: React.FC<{ onStory: () => void, onCollections: () => void }> = ({ 
           <ul className="space-y-4">
             <FooterLink>Help Center</FooterLink>
             <FooterLink>Shipping Policy</FooterLink>
-            <FooterLink>Returns Hub</FooterLink>
-            <FooterLink>M-PESA Inquiries</FooterLink>
+            <FooterLink>Returns</FooterLink>
+            <FooterLink>M-PESA Support</FooterLink>
           </ul>
         </div>
       </div>

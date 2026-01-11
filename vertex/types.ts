@@ -4,7 +4,16 @@ export enum UserRole {
   ADMIN = 'admin'
 }
 
-export type Category = 'Electronics' | 'Apparel' | 'Lifestyle';
+export type Category =
+  | 'Electronics'
+  | 'Fashion'
+  | 'Home & Living'
+  | 'Health & Beauty'
+  | 'Supermarket'
+  | 'Sports & Outdoors'
+  | 'Automotive'
+  | 'Phones & Tablets'
+  | 'Lifestyle'; // Keeping Lifestyle for backward compatibility with existing data
 
 export interface ProductVariant {
   name: string;

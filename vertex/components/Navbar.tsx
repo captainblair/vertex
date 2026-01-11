@@ -48,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = ({ onHome, onAuth, onCollections, onStory 
           <nav className="hidden lg:flex items-center gap-12">
             <NavLink onClick={onHome}>Shop</NavLink>
             <NavLink onClick={onCollections}>Collections</NavLink>
-            <NavLink onClick={onStory}>Our Story</NavLink>
+            <NavLink onClick={onStory}>About Us</NavLink>
           </nav>
 
           {/* Architectural Logo */}

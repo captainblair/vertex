@@ -59,7 +59,7 @@ const Auth: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     };
 
     return (
-        <div className="min-h-screen bg-bone flex flex-col md:flex-row overflow-hidden">
+        <div className="min-h-screen bg-bone flex flex-col md:flex-row max-w-full overflow-x-hidden">
             {/* Visual Identity Side */}
             <div className="hidden md:flex flex-1 bg-dark relative p-16 items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 blueprint-lines opacity-10" />
@@ -67,7 +67,7 @@ const Auth: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                     <div className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.5em] text-brand border border-brand/30 px-4 py-2 rounded-full">
                         <ShieldCheck size={14} /> Secure Protocol
                     </div>
-                    <h1 className="text-6xl font-black uppercase tracking-tighter leading-none text-white italic">
+                    <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none text-white italic">
                         Access <br /> Vertex Node
                     </h1>
                     <p className="text-zinc-500 font-medium tracking-tight text-lg">
@@ -97,7 +97,7 @@ const Auth: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             </div>
 
             {/* Auth Interface Side */}
-            <div className="flex-1 flex flex-col items-center justify-center p-8 md:p-24 relative">
+            <div className="flex-1 flex flex-col items-center justify-center p-6 md:p-24 relative">
                 <button
                     onClick={onBack}
                     className="absolute top-8 left-8 md:top-12 md:left-12 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 hover:text-dark transition-colors flex items-center gap-2 group"
@@ -108,7 +108,7 @@ const Auth: React.FC<{ onBack: () => void }> = ({ onBack }) => {
 
                 <div className="w-full max-w-sm space-y-10">
                     <div className="space-y-8">
-                        <h2 className="text-4xl font-black uppercase tracking-tighter text-dark italic">
+                        <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tighter text-dark italic">
                             {mode === 'signin' ? 'System Login' : 'Customer Enrollment'}
                         </h2>
 

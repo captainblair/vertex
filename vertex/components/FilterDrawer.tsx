@@ -25,7 +25,7 @@ const FilterDrawer: React.FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setFilterOpen(false)}
-            className="fixed inset-0 bg-black/40 z-[150]"
+            className="fixed inset-0 bg-black/60 z-[150]"
           />
           <motion.aside
             initial={{ x: '100%' }}
@@ -37,7 +37,7 @@ const FilterDrawer: React.FC = () => {
             <div className="p-8 flex justify-between items-center border-b border-zinc-50">
               <div className="flex items-center gap-4">
                 <SlidersHorizontal size={20} className="text-zinc-400" />
-                <h3 className="text-xs font-black uppercase tracking-widest text-dark">Refine Archive</h3>
+                <h3 className="text-xs font-black uppercase tracking-widest text-dark">Filter Products</h3>
               </div>
               <button onClick={() => setFilterOpen(false)} className="p-2 hover:bg-zinc-100 rounded-full transition-colors">
                 <X size={20} className="text-zinc-300" />
@@ -47,7 +47,7 @@ const FilterDrawer: React.FC = () => {
             <div className="flex-grow p-8 space-y-12 overflow-y-auto hide-scrollbar">
               {/* Price Range */}
               <div className="space-y-6">
-                <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400">Valuation Range</h4>
+                <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400">Price Range</h4>
                 <div className="space-y-4">
                   <input type="range" className="w-full accent-dark h-1.5 bg-zinc-100 rounded-full appearance-none cursor-pointer" />
                   <div className="flex justify-between text-[10px] font-mono font-black text-zinc-400">
@@ -59,7 +59,7 @@ const FilterDrawer: React.FC = () => {
 
               {/* Color Swatches */}
               <div className="space-y-6">
-                <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400">Surface Finish</h4>
+                <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400">Color</h4>
                 <div className="flex flex-wrap gap-4">
                   {COLORS.map((color) => (
                     <button
@@ -80,19 +80,19 @@ const FilterDrawer: React.FC = () => {
 
               {/* Status Filters */}
               <div className="space-y-6">
-                <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400">Protocol Status</h4>
+                <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400">Product Status</h4>
                 <div className="space-y-3">
                   <FilterCheckbox label="New Arrivals" />
                   <FilterCheckbox label="Limited Edition" />
-                  <FilterCheckbox label="Sale / Archive" />
-                  <FilterCheckbox label="Verified Refurbished" />
+                  <FilterCheckbox label="On Sale" />
+                  <FilterCheckbox label="Refurbished" />
                 </div>
               </div>
             </div>
 
             <div className="p-8 border-t border-zinc-50 bg-zinc-50/50 flex gap-4">
               <Button variant="secondary" className="flex-1 py-4" onClick={() => setFilterOpen(false)}>Clear</Button>
-              <Button variant="primary" className="flex-[2] py-4" onClick={() => setFilterOpen(false)}>Apply Protocol</Button>
+              <Button variant="primary" className="flex-[2] py-4" onClick={() => setFilterOpen(false)}>Apply Filters</Button>
             </div>
           </motion.aside>
         </>

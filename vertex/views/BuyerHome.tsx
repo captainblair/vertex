@@ -6,11 +6,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const MOCK_PRODUCTS: Product[] = [
   { id: 'p1', title: 'Carbon Node / Phone Zero', description: 'Structural precision met with technical superiority. Titanium skeleton.', price: 174000, stock: 12, image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&q=80&w=800', category: 'Electronics', is_approved: true, vendor_name: 'Vertex' },
-  { id: 'p2', title: '01 Linen Tunic / Graphite', description: 'Architectural silhouette carved from heavyweight Belgian linen.', price: 14500, stock: 45, image: 'https://images.unsplash.com/photo-1594932224010-74f43a054652?auto=format&fit=crop&q=80&w=800', category: 'Apparel', is_approved: true, vendor_name: 'Vertex' },
+  { id: 'p2', title: '01 Linen Tunic / Graphite', description: 'Architectural silhouette carved from heavyweight Belgian linen.', price: 14500, stock: 45, image: 'https://images.unsplash.com/photo-1594932224010-74f43a054652?auto=format&fit=crop&q=80&w=800', category: 'Fashion', is_approved: true, vendor_name: 'Vertex' },
   { id: 'p3', title: 'Modular Glass Vessel', description: 'Hand-blown technical glass for structural hydration.', price: 5900, stock: 20, image: 'https://images.unsplash.com/photo-1585776245991-cf89dd7fc53e?auto=format&fit=crop&q=80&w=800', category: 'Lifestyle', is_approved: true, vendor_name: 'Vertex' },
   { id: 'p4', title: 'Brushed Aluminum Node', description: 'Wireless audio node with noise suppression protocols.', price: 32000, stock: 15, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=800', category: 'Electronics', is_approved: true, vendor_name: 'Vertex' },
   { id: 'p5', title: 'Apex Titanium Chronograph', description: 'Precision time-keeping node. Industrial-grade assembly.', price: 89000, stock: 5, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800', category: 'Electronics', is_approved: true, vendor_name: 'Vertex' },
-  { id: 'p6', title: 'Tech-Shell / Waterproof 02', description: 'Gore-Tex membrane with laser-welded seams.', price: 28500, stock: 18, image: 'https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&q=80&w=800', category: 'Apparel', is_approved: true, vendor_name: 'Vertex' },
+  { id: 'p6', title: 'Tech-Shell / Waterproof 02', description: 'Gore-Tex membrane with laser-welded seams.', price: 28500, stock: 18, image: 'https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&q=80&w=800', category: 'Fashion', is_approved: true, vendor_name: 'Vertex' },
   { id: 'p7', title: 'Concrete Base Lamp', description: 'Brutalist illumination for architectural spaces.', price: 12500, stock: 8, image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&q=80&w=800', category: 'Lifestyle', is_approved: true, vendor_name: 'Vertex' },
   { id: 'p8', title: 'Ceramic Serving Set', description: 'Minimalist dining nodes with matte obsidian finish.', price: 8200, stock: 30, image: 'https://images.unsplash.com/photo-1578749553375-8785836d31bc?auto=format&fit=crop&q=80&w=800', category: 'Lifestyle', is_approved: true, vendor_name: 'Vertex' },
 ];
@@ -27,10 +27,10 @@ const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
     : products.filter(p => p.category === activeCategory);
 
   return (
-    <div className="w-full flex flex-col bg-bone overflow-hidden selection:bg-brand/10">
+    <div className="w-full max-w-full overflow-x-hidden flex flex-col bg-bone selection:bg-brand/10">
 
       {/* 1. Kinetic Hero: Constant Bold Glide */}
-      <section className="relative w-full h-screen overflow-hidden flex items-center justify-center pt-48 md:pt-64">
+      <section className="relative w-full h-screen overflow-hidden flex items-center justify-center pt-32 md:pt-64">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=2000"
@@ -52,8 +52,8 @@ const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
             className="space-y-6 opacity-100"
           >
             <span className="text-white text-[10px] md:text-[12px] font-black uppercase tracking-[1em] md:tracking-[1.5em] opacity-100 block mb-4 technical-shadow-text">Establishing Excellence</span>
-            <h1 className="text-6xl md:text-[140px] font-black text-white leading-[0.85] tracking-tighter uppercase select-none technical-shadow-text">
-              THE NEW <br /> STANDARD.
+            <h1 className="text-2xl md:text-[140px] font-black text-white leading-[0.85] tracking-tighter uppercase select-none technical-shadow-text">
+              THE<br />NEW<br />STANDARD.
             </h1>
           </motion.div>
 
@@ -71,6 +71,7 @@ const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
           >
             Curated Essentials. Engineered for Quality.
           </motion.p>
+
 
           <motion.div
             initial={{ opacity: 0 }}
@@ -92,37 +93,52 @@ const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
       <div className="h-px w-full bg-zinc-200 relative z-30" />
 
       {/* 2. Department Sub-Nav with Indicator */}
-      <nav className="sticky top-[88px] z-50 bg-zinc-100/80 backdrop-blur-xl border-b border-zinc-200/50 py-6">
-        <div className="max-w-screen-2xl mx-auto px-6 md:px-12 flex items-center justify-between">
-          <div className="flex gap-4 md:gap-8 relative items-center">
-            {['All', 'Electronics', 'Apparel', 'Lifestyle'].map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat as any)}
-                className={`relative px-6 py-2.5 text-[10px] font-black uppercase tracking-[0.3em] transition-colors duration-500 z-10 ${activeCategory === cat ? 'text-white' : 'text-zinc-400 hover:text-dark'}`}
-              >
-                {cat === 'All' ? 'Archive' : cat === 'Electronics' ? 'Technical' : cat}
-                {activeCategory === cat && (
-                  <motion.div
-                    layoutId="dept-capsule"
-                    className="absolute inset-0 bg-dark rounded-full -z-10"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
-              </button>
-            ))}
+      <nav className="sticky top-[88px] z-50 bg-[#F4F4F5]/80 backdrop-blur-xl border-b border-zinc-200/50 py-4">
+        <div className="max-w-screen-2xl mx-auto px-6 md:px-12 flex items-center gap-6">
+          {/* Scrollable Container with Faders */}
+          <div className="relative flex-grow flex items-center overflow-hidden">
+            {/* Left Fader */}
+            <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-[#F4F4F5] to-transparent z-20 pointer-events-none" />
+
+            {/* Main Category Slider */}
+            <div className="flex gap-3 md:gap-4 overflow-x-auto hide-scrollbar scroll-smooth py-2 px-6">
+              {['All', 'Electronics', 'Fashion', 'Home & Living', 'Health & Beauty', 'Supermarket', 'Sports & Outdoors', 'Automotive', 'Phones & Tablets'].map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat as any)}
+                  className={`relative px-6 py-2.5 text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 z-10 whitespace-nowrap rounded-full ${activeCategory === cat ? 'text-white' : 'text-zinc-400 hover:text-dark hover:bg-zinc-200/50'
+                    }`}
+                >
+                  {cat === 'All' ? 'Main category' : cat}
+                  {activeCategory === cat && (
+                    <motion.div
+                      layoutId="dept-capsule"
+                      className="absolute inset-0 bg-dark rounded-full -z-10"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+
+            {/* Right Fader */}
+            <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#F4F4F5] to-transparent z-20 pointer-events-none" />
           </div>
+
+          <div className="h-8 w-px bg-zinc-200 hidden md:block" />
+
           <button
             onClick={() => setFilterOpen(true)}
-            className="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400 hover:text-dark transition-all group"
+            className="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400 hover:text-dark transition-all group whitespace-nowrap px-4 shrink-0"
           >
-            <SlidersHorizontal size={16} className="group-hover:rotate-180 transition-transform duration-500" /> Refine Registry
+            <SlidersHorizontal size={16} className="group-hover:rotate-180 transition-transform duration-500" />
+            <span className="hidden lg:inline">Filter Products</span>
           </button>
         </div>
       </nav>
 
       {/* 3. Product Archive: Architectural Symmetry */}
-      <div id="archive" className="bg-blueprint blueprint-lines min-h-screen relative py-40 px-6 md:px-12">
+      <div id="archive" className="bg-blueprint blueprint-lines min-h-screen relative py-20 md:py-40 px-6 md:px-12">
         <div className="max-w-screen-2xl mx-auto">
           {isLoading ? (
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
@@ -131,7 +147,7 @@ const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-12 lg:gap-16">
               {filteredProducts.map((p) => (
                 <ProductCard key={p.id} product={p} onAdd={() => addToCart(p)} />
               ))}
@@ -141,12 +157,12 @@ const BuyerHome: React.FC<{ onCheckout: () => void }> = ({ onCheckout }) => {
       </div>
 
       {/* Brand Ethos */}
-      <section className="bg-dark text-white py-48 px-6 md:px-12 relative overflow-hidden">
+      <section className="bg-dark text-white py-32 md:py-48 px-6 md:px-12 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-zinc-900/50 skew-x-12 translate-x-24 pointer-events-none" />
-        <div className="max-w-screen-xl mx-auto grid md:grid-cols-2 gap-32 items-center relative z-10">
+        <div className="max-w-screen-xl mx-auto grid md:grid-cols-2 gap-16 md:gap-32 items-center relative z-10">
           <div className="space-y-10">
             <span className="text-brand text-[11px] font-black uppercase tracking-[0.8em]">Architectural Vision</span>
-            <h3 className="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-[0.85]">
+            <h3 className="text-2xl md:text-8xl font-black tracking-tighter uppercase leading-[0.85]">
               ENGINEERED <br /> SIMPLICITY.
             </h3>
             <p className="text-zinc-500 text-xl font-light leading-relaxed max-w-lg">

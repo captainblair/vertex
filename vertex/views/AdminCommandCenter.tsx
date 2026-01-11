@@ -30,7 +30,7 @@ const AdminCommandCenter: React.FC<{ onHome: () => void }> = ({ onHome }) => {
   const handleCreateProduct = async () => {
     try {
       if (!draftProduct.title.trim()) {
-        alert("Verification Error: Product Designation is required.");
+        alert("Verification Error: Product Name is required.");
         return;
       }
       if (!draftProduct.price || isNaN(parseFloat(draftProduct.price))) {
@@ -38,7 +38,7 @@ const AdminCommandCenter: React.FC<{ onHome: () => void }> = ({ onHome }) => {
         return;
       }
       if (!draftProduct.stock || isNaN(parseInt(draftProduct.stock))) {
-        alert("Verification Error: Valid Stock Nodes count is required.");
+        alert("Verification Error: Valid Stock Quantity count is required.");
         return;
       }
 
@@ -55,15 +55,15 @@ const AdminCommandCenter: React.FC<{ onHome: () => void }> = ({ onHome }) => {
       setDraftProduct({ title: '', description: '', price: '', stock: '', category: 'Lifestyle', image: '' });
       setIsCreating(false);
       fetchProducts();
-      alert("SUCCESS: New SKU synchronized to registry.");
+      alert("SUCCESS: New product saved.");
     } catch (e: any) {
       console.error("Product creation failed", e);
-      alert(`CRITICAL ERROR: Protocol failed to synchronize new SKU. Details: ${e.message || "Unknown error"}`);
+      alert(`CRITICAL ERROR: Failed to save product. Details: ${e.message || "Unknown error"}`);
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm("Confirm protocol: Delete SKU from registry?")) {
+    if (confirm("Confirm: Delete product from list?")) {
       await productService.deleteProduct(id);
       fetchProducts();
     }
@@ -72,25 +72,25 @@ const AdminCommandCenter: React.FC<{ onHome: () => void }> = ({ onHome }) => {
   const totalValuation = products.reduce((acc, p) => acc + (p.price * p.stock), 0);
 
   return (
-    <div className="bg-dark min-h-screen text-white">
+    <div className="bg-dark min-h-screen max-w-full overflow-x-hidden text-white">
       <div className="max-w-screen-2xl mx-auto px-6 md:px-12 py-12 space-y-16">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-12 border-b border-white/5">
           <div className="space-y-3">
             <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.4em] text-brand">
-              <Activity size={14} /> Vertex Master Node
+              <Activity size={14} /> Admin Dashboard
             </div>
-            <h1 className="text-6xl font-black uppercase tracking-tighter leading-none text-white">Command Center</h1>
-            <p className="text-zinc-500 font-medium tracking-tight">Internal D2C distribution and protocol management.</p>
+            <h1 className="text-2xl md:text-6xl font-black uppercase tracking-tighter leading-none text-white">Control Panel</h1>
+            <p className="text-zinc-500 font-medium tracking-tight">Manage products, orders, and inventory.</p>
           </div>
           <div className="flex gap-4">
             <Button variant="secondary" onClick={onHome}>View Storefront</Button>
-            <Button variant="cta">Global Sync</Button>
+            <Button variant="cta">Sync Data</Button>
           </div>
         </div>
 
         <div className="flex gap-10 border-b border-white/5 pb-2">
-          <TabBtn active={activeTab === 'inventory'} onClick={() => setActiveTab('inventory')}>Inventory Ledger</TabBtn>
-          <TabBtn active={activeTab === 'sales'} onClick={() => setActiveTab('sales')}>Sales Archive</TabBtn>
+          <TabBtn active={activeTab === 'inventory'} onClick={() => setActiveTab('inventory')}>Inventory List</TabBtn>
+          <TabBtn active={activeTab === 'sales'} onClick={() => setActiveTab('sales')}>Sales History</TabBtn>
           <TabBtn active={activeTab === 'settings'} onClick={() => setActiveTab('settings')}>Control Panel</TabBtn>
         </div>
 
@@ -98,15 +98,15 @@ const AdminCommandCenter: React.FC<{ onHome: () => void }> = ({ onHome }) => {
           <div className="space-y-12">
             {/* Stats Bar */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <StatCard label="Live SKU Nodes" value={`${products.length} Units`} icon={<Package size={24} />} />
-              <StatCard label="Inventory Valuation" value={`KSh ${(totalValuation / 1000000).toFixed(1)}M`} icon={<Activity size={24} />} />
-              <StatCard label="M-PESA Settlement" value="KSh 8.2M" icon={<CreditCard size={24} />} />
+              <StatCard label="Active Products" value={`${products.length} Units`} icon={<Package size={24} />} />
+              <StatCard label="Inventory Value" value={`KSh ${(totalValuation / 1000000).toFixed(1)}M`} icon={<Activity size={24} />} />
+              <StatCard label="M-PESA Payments" value="KSh 8.2M" icon={<CreditCard size={24} />} />
             </div>
 
             {/* Global Announcement Tool */}
             <div className="bg-zinc-900/50 rounded-3xl p-8 border border-white/5 space-y-6">
               <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-zinc-500">
-                <Megaphone size={14} /> Global Announcement Protocol
+                <Megaphone size={14} /> Global Announcements
               </div>
               <div className="flex gap-4">
                 <input
@@ -122,37 +122,37 @@ const AdminCommandCenter: React.FC<{ onHome: () => void }> = ({ onHome }) => {
             {/* Inventory Table Container */}
             <div className="bg-zinc-900/30 border border-white/5 rounded-3xl overflow-hidden">
               <div className="p-8 flex justify-between items-center border-b border-white/5">
-                <h3 className="text-sm font-black uppercase tracking-[0.2em] text-white">Product Archive Ledger</h3>
+                <h3 className="text-sm font-black uppercase tracking-[0.2em] text-white">Product List</h3>
                 <Button
                   variant={isCreating ? "secondary" : "secondary"}
                   onClick={() => setIsCreating(!isCreating)}
                   className="px-6 py-2 bg-white/5 hover:bg-white/10 border-white/10 text-white"
                 >
-                  {isCreating ? "Cancel Protocol" : <><Plus size={16} /> New SKU</>}
+                  {isCreating ? "Cancel" : <><Plus size={16} /> Add New Product</>}
                 </Button>
               </div>
 
               {isCreating && (
                 <div className="p-8 bg-zinc-950/50 border-b border-white/5 grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 block ml-2">Product Designation</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 block ml-2">Product Name</label>
                     <input
                       value={draftProduct.title}
-                      onChange={(e) => setDraftProduct({ title: e.target.value })}
+                      onChange={(e) => setDraftProduct({ ...draftProduct, title: e.target.value })}
                       placeholder="e.g. Carbon Node 01"
                       className="w-full bg-zinc-900 border border-white/5 p-4 rounded-xl text-xs font-bold uppercase tracking-widest text-white outline-none focus:ring-1 focus:ring-brand/50"
                     />
                     <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 block ml-2">Description</label>
                     <textarea
                       value={draftProduct.description}
-                      onChange={(e) => setDraftProduct({ description: e.target.value })}
+                      onChange={(e) => setDraftProduct({ ...draftProduct, description: e.target.value })}
                       placeholder="Technical specifications..."
                       className="w-full bg-zinc-900 border border-white/5 p-4 rounded-xl text-xs font-bold uppercase tracking-widest text-white outline-none focus:ring-1 focus:ring-brand/50 h-32"
                     />
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 block ml-2">Image Resource Asset URL</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 block ml-2">Product Image URL</label>
                     <input
                       value={draftProduct.image}
-                      onChange={(e) => setDraftProduct({ image: e.target.value })}
+                      onChange={(e) => setDraftProduct({ ...draftProduct, image: e.target.value })}
                       placeholder="https://images.unsplash.com/..."
                       className="w-full bg-zinc-900 border border-white/5 p-4 rounded-xl text-xs font-bold uppercase tracking-widest text-white outline-none focus:ring-1 focus:ring-brand/50"
                     />
@@ -160,77 +160,85 @@ const AdminCommandCenter: React.FC<{ onHome: () => void }> = ({ onHome }) => {
                   <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 block ml-2">Valuation (KES)</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 block ml-2">Price (KES)</label>
                         <input
                           value={draftProduct.price}
-                          onChange={(e) => setDraftProduct({ price: e.target.value })}
+                          onChange={(e) => setDraftProduct({ ...draftProduct, price: e.target.value })}
                           placeholder="174000"
                           className="w-full bg-zinc-900 border border-white/5 p-4 rounded-xl text-xs font-bold uppercase tracking-widest text-white outline-none focus:ring-1 focus:ring-brand/50"
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 block ml-2">Stock Nodes</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 block ml-2">Stock Quantity</label>
                         <input
                           value={draftProduct.stock}
-                          onChange={(e) => setDraftProduct({ stock: e.target.value })}
+                          onChange={(e) => setDraftProduct({ ...draftProduct, stock: e.target.value })}
                           placeholder="48"
                           className="w-full bg-zinc-900 border border-white/5 p-4 rounded-xl text-xs font-bold uppercase tracking-widest text-white outline-none focus:ring-1 focus:ring-brand/50"
                         />
                       </div>
                     </div>
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 block ml-2">Category Registry</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 block ml-2">Category</label>
                     <select
                       value={draftProduct.category}
-                      onChange={(e) => setDraftProduct({ category: e.target.value as any })}
+                      onChange={(e) => setDraftProduct({ ...draftProduct, category: e.target.value as any })}
                       className="w-full bg-zinc-900 border border-white/5 p-4 rounded-xl text-xs font-bold uppercase tracking-widest text-white outline-none focus:ring-1 focus:ring-brand/50"
                     >
-                      <option value="Electronics">Technical (Electronics)</option>
-                      <option value="Apparel">Apparel</option>
-                      <option value="Lifestyle">Lifestyle</option>
+                      <option value="Electronics">Electronics</option>
+                      <option value="Fashion">Fashion</option>
+                      <option value="Home & Living">Home & Living</option>
+                      <option value="Health & Beauty">Health & Beauty</option>
+                      <option value="Supermarket">Supermarket</option>
+                      <option value="Sports & Outdoors">Sports & Outdoors</option>
+                      <option value="Automotive">Automotive</option>
+                      <option value="Phones & Tablets">Phones & Tablets</option>
+                      <option value="Lifestyle">Lifestyle (Legacy)</option>
                     </select>
                     <div className="pt-4">
-                      <Button variant="cta" onClick={handleCreateProduct} className="w-full py-5"><Plus size={18} /> Initialize SKU Sync</Button>
+                      <Button variant="cta" onClick={handleCreateProduct} className="w-full py-5"><Plus size={18} /> Save Product</Button>
                     </div>
                   </div>
                 </div>
               )}
-              <table className="w-full text-left">
-                <thead>
-                  <tr className="bg-white/5 border-b border-white/5">
-                    <th className="px-8 py-5 text-[10px] font-black uppercase text-zinc-500">Designation</th>
-                    <th className="px-8 py-5 text-[10px] font-black uppercase text-zinc-500">Category</th>
-                    <th className="px-8 py-5 text-[10px] font-black uppercase text-zinc-500">Valuation</th>
-                    <th className="px-8 py-5 text-[10px] font-black uppercase text-zinc-500">Stock</th>
-                    <th className="px-8 py-5 text-[10px] font-black uppercase text-zinc-500 text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {products.map((p) => (
-                    <tr key={p.id} className="hover:bg-white/5 transition-colors">
-                      <td className="px-8 py-6">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-white/10 rounded-xl overflow-hidden grayscale">
-                            <img src={p.image} className="w-full h-full object-cover" alt="" />
-                          </div>
-                          <div>
-                            <p className="text-xs font-black uppercase text-white">{p.title}</p>
-                            <p className="text-[9px] text-zinc-500 font-mono">ID: {p.id.slice(0, 8)}</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-8 py-6"><span className="text-[9px] font-black bg-white/10 text-zinc-300 px-3 py-1 rounded-full uppercase tracking-widest">{p.category}</span></td>
-                      <td className="px-8 py-6 text-xs font-mono font-bold text-zinc-300">KSh {p.price.toLocaleString()}</td>
-                      <td className="px-8 py-6 text-xs font-bold text-zinc-300">{p.stock} Nodes</td>
-                      <td className="px-8 py-6 text-right">
-                        <div className="flex justify-end gap-4 text-zinc-600">
-                          <button className="hover:text-white transition-colors"><Edit2 size={16} /></button>
-                          <button onClick={() => handleDelete(p.id)} className="hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
-                        </div>
-                      </td>
+              <div className="overflow-x-auto hide-scrollbar">
+                <table className="w-full text-left min-w-[800px]">
+                  <thead>
+                    <tr className="bg-white/5 border-b border-white/5">
+                      <th className="px-8 py-5 text-[10px] font-black uppercase text-zinc-500">Product Name</th>
+                      <th className="px-8 py-5 text-[10px] font-black uppercase text-zinc-500">Category</th>
+                      <th className="px-8 py-5 text-[10px] font-black uppercase text-zinc-500">Price</th>
+                      <th className="px-8 py-5 text-[10px] font-black uppercase text-zinc-500">Stock</th>
+                      <th className="px-8 py-5 text-[10px] font-black uppercase text-zinc-500 text-right">Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-white/5">
+                    {products.map((p) => (
+                      <tr key={p.id} className="hover:bg-white/5 transition-colors">
+                        <td className="px-8 py-6">
+                          <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-white/10 rounded-xl overflow-hidden grayscale">
+                              <img src={p.image} className="w-full h-full object-cover" alt="" />
+                            </div>
+                            <div>
+                              <p className="text-xs font-black uppercase text-white">{p.title}</p>
+                              <p className="text-[9px] text-zinc-500 font-mono">ID: {p.id.slice(0, 8)}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-8 py-6"><span className="text-[9px] font-black bg-white/10 text-zinc-300 px-3 py-1 rounded-full uppercase tracking-widest">{p.category}</span></td>
+                        <td className="px-8 py-6 text-xs font-mono font-bold text-zinc-300">KSh {p.price.toLocaleString()}</td>
+                        <td className="px-8 py-6 text-xs font-bold text-zinc-300">{p.stock} Units</td>
+                        <td className="px-8 py-6 text-right">
+                          <div className="flex justify-end gap-4 text-zinc-600">
+                            <button className="hover:text-white transition-colors"><Edit2 size={16} /></button>
+                            <button onClick={() => handleDelete(p.id)} className="hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         )}
@@ -239,7 +247,7 @@ const AdminCommandCenter: React.FC<{ onHome: () => void }> = ({ onHome }) => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <div className="lg:col-span-2 space-y-8">
               <div className="bg-zinc-900/30 border border-white/5 rounded-3xl p-8 space-y-8">
-                <h3 className="text-sm font-black uppercase tracking-[0.2em] border-b border-white/5 pb-6 text-white">Recent Settlements</h3>
+                <h3 className="text-sm font-black uppercase tracking-[0.2em] border-b border-white/5 pb-6 text-white">Recent Payments</h3>
                 <div className="space-y-6">
                   {[1, 2, 3, 4, 5].map(i => (
                     <div key={i} className="flex items-center justify-between p-4 hover:bg-white/5 rounded-2xl transition-all">
@@ -247,7 +255,7 @@ const AdminCommandCenter: React.FC<{ onHome: () => void }> = ({ onHome }) => {
                         <div className="p-3 bg-brand/10 rounded-full text-brand"><CreditCard size={18} /></div>
                         <div>
                           <p className="text-xs font-black uppercase text-white">M-PESA / {Math.random().toString(36).substr(2, 10).toUpperCase()}</p>
-                          <p className="text-[9px] text-zinc-500 uppercase tracking-widest">Nairobi, KE • 2 mins ago</p>
+                          <p className="text-[9px] text-zinc-500 uppercase tracking-widest">M-PESA Payments • 2 mins ago</p>
                         </div>
                       </div>
                       <span className="text-sm font-mono font-bold text-brand">+KSh 14,500</span>
@@ -285,7 +293,7 @@ const AdminCommandCenter: React.FC<{ onHome: () => void }> = ({ onHome }) => {
           <div className="fixed inset-0 bg-dark/60 backdrop-blur-sm z-[200] flex items-center justify-center">
             <div className="text-center space-y-4">
               <div className="w-12 h-12 border-4 border-brand border-t-transparent rounded-full animate-spin mx-auto" />
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-brand">Syncing Registry Node...</p>
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-brand">Syncing Data...</p>
             </div>
           </div>
         )}

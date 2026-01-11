@@ -82,7 +82,7 @@ const Checkout: React.FC<{ onBack: () => void }> = ({ onBack }) => {
           <CheckCircle2 size={56} />
         </motion.div>
         <div className="space-y-6">
-          <h2 className="text-5xl font-black tracking-tighter uppercase leading-none text-dark">Registry Updated.</h2>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tighter uppercase leading-none text-dark">Registry Updated.</h2>
           <p className="text-zinc-500 text-lg font-medium leading-relaxed max-w-md mx-auto">M-PESA Settlement Verified. Your acquisition is confirmed and entering logistical preparation.</p>
         </div>
         <Button onClick={onBack} variant="primary" className="px-12 py-5 bg-dark text-white">Return to Registry</Button>
@@ -91,7 +91,7 @@ const Checkout: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   }
 
   return (
-    <div className="bg-blueprint blueprint-lines min-h-screen">
+    <div className="bg-blueprint blueprint-lines min-h-screen max-w-full overflow-x-hidden">
       <div className="max-w-screen-2xl mx-auto px-6 py-12 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
 
         {/* Left Column: Ledger Summary */}
@@ -138,7 +138,7 @@ const Checkout: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         <div className="space-y-16 order-1 lg:order-2">
           <div className="bg-zinc-100/50 border border-zinc-100 rounded-[3rem] lg:p-16 shadow-plinth space-y-12">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-              <h1 className="text-4xl font-black uppercase tracking-tighter">Settlement.</h1>
+              <h1 className="text-2xl md:text-4xl font-black uppercase tracking-tighter">Settlement.</h1>
               <div className="flex items-center gap-3 text-brand text-[10px] font-black uppercase tracking-[0.4em] bg-emerald-50 px-6 py-3 rounded-full border border-emerald-100 shadow-sm">
                 <Lock size={16} /> Secure Protocol
               </div>
@@ -169,7 +169,7 @@ const Checkout: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                     onChange={(e) => setPhoneNumber(e.target.value)}
                     disabled={checkoutStatus !== 'IDLE'}
                     placeholder="254XXXXXXXXX"
-                    className={`w-full bg-zinc-100/50 border p-10 text-4xl font-mono font-black tracking-tighter rounded-[3rem] outline-none transition-all duration-500 disabled:opacity-40 text-center lg:text-left placeholder:opacity-5 text-dark shadow-sm focus:shadow-md ${checkoutStatus === 'IDLE' ? 'border-zinc-100 focus:border-dark' : 'border-brand'
+                    className={`w-full bg-zinc-100/50 border p-6 md:p-10 text-2xl md:text-4xl font-mono font-black tracking-tighter rounded-[3rem] outline-none transition-all duration-500 disabled:opacity-40 text-center lg:text-left placeholder:opacity-5 text-dark shadow-sm focus:shadow-md ${checkoutStatus === 'IDLE' ? 'border-zinc-100 focus:border-dark' : 'border-brand'
                       }`}
                   />
                   <div className="hidden lg:block absolute right-10 top-1/2 -translate-y-1/2">
