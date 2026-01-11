@@ -59,16 +59,35 @@ export const productService = {
     },
 
     async updateProduct(id: string, updates: Partial<Product>) {
+        let categoryId = null;
+
+        // Look up category ID if category is being updated
+        if (updates.category) {
+            const { data: categoryData } = await supabase
+                .from('categories')
+                .select('id')
+                .eq('name', updates.category)
+                .single();
+
+            if (categoryData) {
+                categoryId = categoryData.id;
+            }
+        }
+
+        const updateData: any = {};
+
+        if (updates.title !== undefined) updateData.name = updates.title;
+        if (updates.description !== undefined) updateData.description = updates.description;
+        if (updates.price !== undefined) updateData.price = updates.price;
+        if (updates.stock !== undefined) updateData.stock_quantity = updates.stock;
+        if (updates.is_featured !== undefined) updateData.is_featured = updates.is_featured;
+        if (updates.specs !== undefined) updateData.metadata = updates.specs;
+        if (categoryId !== null) updateData.category_id = categoryId;
+        if (updates.image !== undefined) updateData.image_urls = [updates.image];
+
         const { error } = await supabase
             .from('products')
-            .update({
-                name: updates.title,
-                description: updates.description,
-                price: updates.price,
-                stock_quantity: updates.stock,
-                is_featured: updates.is_featured,
-                metadata: updates.specs,
-            })
+            .update(updateData)
             .eq('id', id);
 
         if (error) throw error;

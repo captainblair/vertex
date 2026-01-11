@@ -12,6 +12,7 @@ const AdminCommandCenter: React.FC = () => {
   const [localAnnouncement, setLocalAnnouncement] = useState(announcementText);
   const [activeTab, setActiveTab] = useState<'inventory' | 'sales' | 'settings'>('inventory');
   const [isCreating, setIsCreating] = useState(false);
+  const [editingProductId, setEditingProductId] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,24 +43,53 @@ const AdminCommandCenter: React.FC = () => {
         return;
       }
 
-      await productService.addProduct({
-        title: draftProduct.title,
-        description: draftProduct.description,
-        price: parseFloat(draftProduct.price),
-        stock: parseInt(draftProduct.stock),
-        category: draftProduct.category,
-        image: draftProduct.image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800', // Use default if empty
-        is_featured: false,
-      });
+      if (editingProductId) {
+        // Update existing product
+        await productService.updateProduct(editingProductId, {
+          title: draftProduct.title,
+          description: draftProduct.description,
+          price: parseFloat(draftProduct.price),
+          stock: parseInt(draftProduct.stock),
+          category: draftProduct.category,
+          image: draftProduct.image,
+          is_featured: false,
+        });
+        alert("SUCCESS: Product updated.");
+      } else {
+        // Create new product
+        await productService.addProduct({
+          title: draftProduct.title,
+          description: draftProduct.description,
+          price: parseFloat(draftProduct.price),
+          stock: parseInt(draftProduct.stock),
+          category: draftProduct.category,
+          image: draftProduct.image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800',
+          is_featured: false,
+        });
+        alert("SUCCESS: New product saved.");
+      }
 
       setDraftProduct({ title: '', description: '', price: '', stock: '', category: '' as any, image: '' });
       setIsCreating(false);
+      setEditingProductId(null);
       fetchProducts();
-      alert("SUCCESS: New product saved.");
     } catch (e: any) {
-      console.error("Product creation failed", e);
+      console.error("Product save failed", e);
       alert(`CRITICAL ERROR: Failed to save product. Details: ${e.message || "Unknown error"}`);
     }
+  };
+
+  const handleEdit = (product: Product) => {
+    setDraftProduct({
+      title: product.title,
+      description: product.description,
+      price: product.price.toString(),
+      stock: product.stock.toString(),
+      category: product.category,
+      image: product.image
+    });
+    setEditingProductId(product.id);
+    setIsCreating(true);
   };
 
   const handleDelete = async (id: string) => {
@@ -154,7 +184,13 @@ const AdminCommandCenter: React.FC = () => {
                   <h3 className="text-sm font-black uppercase tracking-[0.2em] text-white">Product List</h3>
                   <Button
                     variant={isCreating ? "secondary" : "secondary"}
-                    onClick={() => setIsCreating(!isCreating)}
+                    onClick={() => {
+                      setIsCreating(!isCreating);
+                      if (isCreating) {
+                        setEditingProductId(null);
+                        setDraftProduct({ title: '', description: '', price: '', stock: '', category: '' as any, image: '' });
+                      }
+                    }}
                     className="px-6 py-2 bg-white/5 hover:bg-white/10 border-white/10 text-white"
                   >
                     {isCreating ? "Cancel" : <><Plus size={16} /> Add New Product</>}
@@ -225,7 +261,9 @@ const AdminCommandCenter: React.FC = () => {
                         <option value="Lifestyle">Lifestyle</option>
                       </select>
                       <div className="pt-4">
-                        <Button variant="cta" onClick={handleCreateProduct} className="w-full py-5"><Plus size={18} /> Save Product</Button>
+                        <Button variant="cta" onClick={handleCreateProduct} className="w-full py-5">
+                          <Plus size={18} /> {editingProductId ? 'Update Product' : 'Save Product'}
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -260,7 +298,7 @@ const AdminCommandCenter: React.FC = () => {
                           <td className="px-8 py-6 text-xs font-bold text-zinc-300">{p.stock} Units</td>
                           <td className="px-8 py-6 text-right">
                             <div className="flex justify-end gap-4 text-zinc-600">
-                              <button className="hover:text-white transition-colors"><Edit2 size={16} /></button>
+                              <button onClick={() => handleEdit(p)} className="hover:text-white transition-colors"><Edit2 size={16} /></button>
                               <button onClick={() => handleDelete(p.id)} className="hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
                             </div>
                           </td>
