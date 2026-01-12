@@ -61,7 +61,7 @@ export const mpesaService = {
         const response = await fetch(`${API_URL}/status/${checkoutRequestId}`);
         const data = await response.json();
 
-        if (data.status === 'SUCCESS') return 'SUCCESS';
+        if (data.status === 'SUCCESS' || data.status === 'COMPLETED') return 'SUCCESS';
         if (data.status === 'FAILED') return 'FAILED';
 
         // If PENDING or UNKNOWN (early polling), wait and retry

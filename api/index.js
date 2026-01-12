@@ -136,7 +136,13 @@ app.get('/api/status/:checkoutRequestId', async (req, res) => {
         return res.json({ status: "UNKNOWN" });
     }
 
-    res.json({ status: data.status.toUpperCase() });
+    const statusMap = {
+        'requested': 'PENDING',
+        'completed': 'SUCCESS',
+        'failed': 'FAILED'
+    };
+
+    res.json({ status: statusMap[data.status] || data.status.toUpperCase() });
 });
 
 export default app;
