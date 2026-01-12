@@ -1,166 +1,66 @@
-# Vertex Marketplace – Blueprint Edition
+# Vertex Marketplace: Blueprint Edition
 
-Vertex is a high-end, multi-vendor e-commerce platform built with a focus on premium architectural aesthetics and technical excellence.  
-The Blueprint Edition emphasizes Architectural Symmetry, delivering a curated studio-gallery experience for elite products.
+Vertex is a high-end, multi-vendor e-commerce platform engineered for premium architectural aesthetics and technical superiority. The **Blueprint Edition** focuses on "Architectural Symmetry," providing a curated studio gallery experience for elite products.
 
----
+##  Design Philosophy: The Blueprint Standard
 
-## Design Philosophy – The Blueprint Standard
+The application follows a minimalist, industrial-grade aesthetic inspired by modern architectural principles and luxury brands like Leica and Bang & Olufsen.
 
-The application follows a minimalist, industrial-grade design inspired by modern architecture and luxury brands such as:
+### 1. The Kinetic Hero: "Constant Bold Glide"
+- **Motion Logic**: Constant vertical floating animation for headlines (Y-axis: +/- 15px).
+- **Typography**: Bold, high-contrast white text (z-index: 20) with a technical drop-shadow for razor-sharp readability against the "untouchable" hero imagery.
+- **Architectural Seams**: A clean 1px horizontal zinc-200 line provides a "hard cut" transition from the cinematic hero to the studio archive.
 
-- Leica  
-- Bang & Olufsen  
+###  2. The Studio Gallery: "Architectural Symmetry"
+- **Uniform Place Cards**: Every product card is identical in size, ensuring a rhythmic, predictable grid.
+- **Strict Aspect Ratios**: Product imagery is locked to a 4:5 portrait aspect ratio with `object-cover` or technical `object-contain` for electronics.
+- **The Blueprint Grid**: The background uses a technical off-white (#F5F5F7) overlaid with 0.5px vertical and horizontal ledger lines (80px square grid).
+- **The Plinth Effect**: Each card features a razor-thin border and subtle shadow. Hovering triggers a tactile "lift" (Y: -6px) and a deepened shadow.
 
-Core principles:
-
-- Clean geometry  
-- High-contrast typography  
-- Precision spacing  
-- Visual balance  
-
----
-
-## The Kinetic Hero – Constant Bold Glide
-
-### Motion Logic
-- Continuous vertical floating animation  
-- Y-axis movement: ±15px  
-
-### Typography
-- Bold, high-contrast white text  
-- Z-index: 20  
-- Technical drop-shadow for sharp readability  
-
-### Architectural Seams
-- 1px horizontal zinc-200 divider  
-- Creates a hard cut from hero to gallery  
+###  3. Premium Interactions
+- **Silent Actions**: "Add to Bag" buttons are hidden by default to maintain grid purity. On hover, a sleek Zinc-900 bar slides up with the specific SKU price.
+- **Department Sub-Nav**: A sticky horizontal category bar featuring a "Liquid Capsule" indicator that slides smoothly between technical verticals (Electronics, Apparel, Lifestyle).
 
 ---
 
-## The Studio Gallery – Architectural Symmetry
+##  Security & M-PESA Integration: "The Vault"
 
-### Uniform Place Cards
-- All product cards share identical dimensions  
-- Creates a rhythmic, predictable grid  
+The payment experience is designed as a high-security node interaction.
 
-### Strict Aspect Ratios
-- Product images: 4:5 portrait  
-- object-cover or object-contain for electronics  
-
-### The Blueprint Grid
-- Background color: #F5F5F7  
-- 0.5px ledger lines  
-- 80px square grid system  
-
-### The Plinth Effect
-- Razor-thin borders  
-- Subtle shadows  
-- Hover lift: Y: -6px  
-- Deepened shadow on hover  
+- **Minimalist Vault UI**: A clean inset panel for payment details.
+- **Visual Trust Protocols**:
+    - Animated lock iconography during session initialization.
+    - Technical transaction progress tracking: `ENCRYPTED` → `SENT` → `VERIFIED`.
+    - Real-time feedback via the Daraja API (Simulated).
+- **Mobile Handshake**: Optimized for 254-region mobile nodes, ensuring the STK push process feels industrial and secure.
 
 ---
 
-## Premium Interactions
-
-### Silent Actions
-- Add to Bag hidden by default  
-- On hover: Zinc-900 bar slides up  
-- Displays SKU-specific pricing  
-
-### Department Sub-Navigation
-- Sticky horizontal category bar  
-- Liquid Capsule indicator  
-- Smooth sliding between:
-  - Electronics  
-  - Apparel  
-  - Lifestyle  
-
----
-
-## Security & M-PESA Integration – The Vault
-
-### Minimalist Vault UI
-- Clean inset payment panel  
-
-### Visual Trust Protocols
-- Animated lock icons  
-- Session initialization feedback  
-
-### Transaction Flow
-
-### Daraja API (Simulated)
-- Real-time transaction feedback  
-
-### Mobile Handshake
-- Optimized for Kenyan mobile nodes (254)  
-- Industrial-feel STK Push flow  
-
----
-
-## Technical Architecture
+##  Technical Architecture
 
 ### Core Stack
-- Framework: React 19  
-- State Management: Zustand 5  
-- Styling: Tailwind CSS  
-- Animations: Framer Motion 11  
-- Icons: Lucide React  
+- **Framework**: React 19
+- **State Management**: Zustand 5 (Master Node pattern)
+- **Styling**: Tailwind CSS (Utility-first architectural design)
+- **Animation**: Framer Motion 11 (Cubic-bezier liquid transitions)
+- **Icons**: Lucide React (Thin-stroke technical set)
 
 ### Internal Modules
-
-#### Admin Command Center
-- Global SKU management  
-- Announcement syncing  
-- Sales archival  
-
-#### Buyer Home
-- Kinetic Hero  
-- Symmetry grid storefront  
-
-#### Settlement System
-- Checkout interface  
-- M-PESA Vault logic  
-
-#### Global UI Nodes
-- Cart Drawer  
-- Profile Drawer  
-- Filter Drawer  
+1.  **Admin Command Center**: A master-node dashboard for global SKU registration, announcement syncing, and sales archival.
+2.  **Buyer Home**: The cinematic storefront featuring the kinetic hero and symmetry grid.
+3.  **Settlement System**: The checkout interface housing the M-PESA "Vault" logic.
+4.  **Global UI Nodes**: Drawers for Cart, Profile, and Refinement (Filters) to keep the main viewport clean.
 
 ---
 
-## Mobile Experience – Extreme Good Preservation
+## Mobile Experience: "Extreme Good" Preservation
+The mobile layout maintains a search-dominant bottom-dock navigation while adopting the Blueprint Edition's uniform grid logic (2-column symmetry). The Kinetic Hero glide is optimized for mobile refresh rates.
 
-- Search-focused bottom dock  
-- 2-column symmetry grid  
-- Optimized hero animations  
-- Smooth mobile refresh rates  
-
----
-
-## Data Structures
-
-### Product Registry
-- ID  
-- Title  
-- Description  
-- Price (KSh)  
-- Stock  
-- Category  
-- Featured Status  
-
-### User Roles
-- BUYER  
-- ADMIN  
-- Supabase-ready access control  
-
-### Order Archive
-- Transaction IDs  
-- Settlement status  
-- Buyer node IDs  
+##  Data Structures
+- **Product Registry**: Includes ID, Title, Description, Price (KSh), Stock, Category, and Featured Status.
+- **User Roles**: Strictly partitioned into `BUYER` and `ADMIN` roles using Supabase-ready logic.
+- **Order Archive**: Tracks transaction IDs, settlement status, and buyer node IDs.
 
 ---
 
-## Vision
-
-Vertex is built to establish a new standard for technical commerce, where design precision meets system performance.
+*Vertex: Establishing the new standard for technical commerce.*
