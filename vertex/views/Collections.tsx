@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Layers, Box, Zap, ShoppingBag } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ShoppingBag, Zap, Layers, Box } from 'lucide-react';
 import { useStore } from '../store';
+import ImageWithFallback from '../components/ImageWithFallback'; // Import safe image
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 
@@ -93,7 +94,7 @@ const Collections: React.FC = () => {
                             onClick={() => handleCollectionClick(collection.category)}
                         >
                             <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-zinc-100 mb-8 shadow-2xl">
-                                <img
+                                <ImageWithFallback
                                     src={collection.image}
                                     alt={collection.title}
                                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 grayscale hover:grayscale-0"

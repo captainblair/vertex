@@ -45,9 +45,9 @@ const ProfileDrawer: React.FC = () => {
 
             <div className="flex-grow p-6 space-y-2">
               <div className="px-4 py-4 text-[9px] font-black text-zinc-300 uppercase tracking-[0.4em]">My Account</div>
-              <DrawerItem icon={<ShoppingBag size={18} />} label="Order History" />
-              <DrawerItem icon={<Heart size={18} />} label="Saved Items" />
-              <DrawerItem icon={<Settings size={18} />} label="Security" />
+              <DrawerItem icon={<ShoppingBag size={18} />} label="Order History" onClick={() => { setProfileOpen(false); navigate('/orders'); }} />
+              <DrawerItem icon={<Heart size={18} />} label="Saved Items" onClick={() => { setProfileOpen(false); navigate('/saved'); }} />
+              <DrawerItem icon={<Settings size={18} />} label="Security" onClick={() => { setProfileOpen(false); navigate('/profile'); }} />
 
               <div className="my-8 border-t border-zinc-50" />
 
@@ -64,7 +64,7 @@ const ProfileDrawer: React.FC = () => {
                     icon={<ShieldCheck size={18} />}
                     label="Dashboard"
                     active={role === UserRole.ADMIN}
-                    onClick={() => { setRole(UserRole.ADMIN); setProfileOpen(false); }}
+                    onClick={() => { setRole(UserRole.ADMIN); setProfileOpen(false); navigate('/admin'); }}
                   />
                 </>
               )}

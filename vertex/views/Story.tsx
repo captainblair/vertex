@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheck, Cpu, Globe, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import ImageWithFallback from '../components/ImageWithFallback';
 
 const Story: React.FC = () => {
     const navigate = useNavigate();
@@ -62,13 +63,14 @@ const Story: React.FC = () => {
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 1 }}
-                        className="aspect-square rounded-[4rem] overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000 border border-zinc-100"
                     >
-                        <img
-                            src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200"
-                            alt="Vertex Standard"
-                            className="w-full h-full object-cover"
-                        />
+                        <div className="aspect-square rounded-[4rem] overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000 border border-zinc-100">
+                            <ImageWithFallback
+                                src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200"
+                                alt="Vertex Standard"
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
                     </motion.div>
                 </div>
             </section>

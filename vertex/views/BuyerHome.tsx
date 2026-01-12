@@ -3,6 +3,7 @@ import { useStore } from '../store';
 import { Product } from '../types';
 import { Plus, ShieldCheck, ArrowRight, SlidersHorizontal, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ImageWithFallback from '../components/ImageWithFallback';
 
 
 
@@ -197,7 +198,7 @@ const ProductCard: React.FC<{ product: Product, onAdd: () => void }> = ({ produc
 
       {/* Internal Scale Image */}
       <div className="w-full h-full overflow-hidden">
-        <img
+        <ImageWithFallback
           src={product.image}
           className={`w-full h-full object-cover transition-all duration-[1.5s] ease-[cubic-bezier(0.16,1,0.3,1)] saturate-[0.9] group-hover:saturate-100 group-hover:scale-110 ${product.category === 'Electronics' ? 'p-10 !object-contain' : ''}`}
           alt={product.title}
