@@ -40,6 +40,14 @@ app.post('/api/stkpush', getAccessToken, async (req, res) => {
     const passkey = process.env.MPESA_PASSKEY || "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
     const callbackUrl = process.env.MPESA_CALLBACK_URL;
 
+    console.log(`[STK Push] Initiating for ${phoneNumber}, amount ${amount}`);
+    console.log(`[STK Push] Callback URL set to: ${callbackUrl}`);
+
+    if (!callbackUrl) {
+        console.error("[STK Push] ERROR: MPESA_CALLBACK_URL is not set in environment variables.");
+        return res.status(500).json({ error: "Configuration Error: Callback URL missing" });
+    }
+
     const date = new Date();
     const timestamp = date.getFullYear() +
         ("0" + (date.getMonth() + 1)).slice(-2) +
@@ -71,7 +79,10 @@ app.post('/api/stkpush', getAccessToken, async (req, res) => {
             { headers: { Authorization: `Bearer ${req.token}` } }
         );
 
+        console.log("[STK Push] Safaricom Response:", JSON.stringify(response.data));
+
         if (response.data.ResponseCode === "0") {
+            console.log("[STK Push] Success. Inserting into Supabase...");
             const { error } = await supabase
                 .from('mpesa_transactions')
                 .insert({
@@ -81,12 +92,16 @@ app.post('/api/stkpush', getAccessToken, async (req, res) => {
                     amount: amount
                 });
 
-            if (error) console.error("Supabase Insert Error:", error);
+            if (error) {
+                console.error("[STK Push] Supabase Error:", error);
+            } else {
+                console.log("[STK Push] Supabase Record Created.");
+            }
         }
 
         res.json(response.data);
     } catch (error) {
-        console.error("STK Push Error:", error.response ? error.response.data : error.message);
+        console.error("STK Push Error:", error.response ? JSON.stringify(error.response.data) : error.message);
         res.status(500).json({ error: "STK Push Failed", details: error.response?.data });
     }
 });
