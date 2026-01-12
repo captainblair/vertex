@@ -9,9 +9,16 @@ app.use(cors());
 app.use(express.json());
 
 // Initialize Supabase Client
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+    console.error("[Backend] CRITICAL ERROR: Supabase environment variables are missing!");
+    console.error(`[Backend] SUPABASE_URL: ${supabaseUrl ? "FOUND" : "MISSING"}`);
+    console.error(`[Backend] SUPABASE_KEY: ${supabaseKey ? "FOUND" : "MISSING"}`);
+}
+
+const supabase = (supabaseUrl && supabaseKey) ? createClient(supabaseUrl, supabaseKey) : null;
 
 // --- HELPER: Get OAuth Token ---
 async function getAccessToken(req, res, next) {
@@ -81,7 +88,7 @@ app.post('/api/stkpush', getAccessToken, async (req, res) => {
 
         console.log("[STK Push] Safaricom Response:", JSON.stringify(response.data));
 
-        if (response.data.ResponseCode === "0") {
+        if (response.data.ResponseCode === "0" && supabase) {
             console.log("[STK Push] Success. Inserting into Supabase...");
             const { error } = await supabase
                 .from('mpesa_transactions')
@@ -111,7 +118,7 @@ app.post('/api/callback', async (req, res) => {
     console.log("---- STK PUSH CALLBACK RECEIVED ----");
     const callbackData = req.body?.Body?.stkCallback;
 
-    if (callbackData) {
+    if (callbackData && supabase) {
         const checkoutReqID = callbackData.CheckoutRequestID;
         const resultCode = callbackData.ResultCode;
         const resultDesc = callbackData.ResultDesc;
@@ -140,6 +147,10 @@ app.post('/api/callback', async (req, res) => {
 
 app.get('/api/status/:checkoutRequestId', async (req, res) => {
     const { checkoutRequestId } = req.params;
+
+    if (!supabase) {
+        return res.json({ status: "ERROR: DB NOT CONNECTED" });
+    }
 
     const { data, error } = await supabase
         .from('mpesa_transactions')
