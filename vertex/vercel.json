@@ -1,4 +1,6 @@
 {
+    "buildCommand": "vite build",
+    "outputDirectory": "dist",
     "framework": "vite",
     "rewrites": [
         {
@@ -6,7 +8,7 @@
             "destination": "/api/index.js"
         },
         {
-            "source": "/(.*)",
+            "source": "/((?!api/|assets/|favicon.ico).*)",
             "destination": "/index.html"
         }
     ]
