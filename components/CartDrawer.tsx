@@ -82,7 +82,7 @@ const CartDrawer: React.FC = () => {
                     navigate('/checkout');
                   }}
                 >
-                  Proceed to Vault <ArrowRight size={18} />
+                  Proceed to Pay <ArrowRight size={18} />
                 </Button>
                 <p className="text-center text-[8px] text-zinc-700 uppercase tracking-[0.4em] font-black">Encrypted Handshake Active</p>
               </div>

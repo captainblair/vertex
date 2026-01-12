@@ -60,8 +60,8 @@ const MobileMenu: React.FC = () => {
                             {!user && (
                                 <NavNode
                                     icon={<ShieldCheck size={20} />}
-                                    label="Auth Sync"
-                                    sub="Connect via Protocol"
+                                    label="Sign In"
+                                    sub="Access your account"
                                     onClick={() => handleNav('/auth')}
                                 />
                             )}
