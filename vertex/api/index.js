@@ -1,10 +1,8 @@
 
-const express = require('express');
-const cors = require('cors');
-const axios = require('axios');
-const { createClient } = require('@supabase/supabase-js');
-// Vercel handles env vars automatically, but for local testing:
-// require('dotenv').config();
+import express from 'express';
+import cors from 'cors';
+import axios from 'axios';
+import { createClient } from '@supabase/supabase-js';
 
 const app = express();
 app.use(cors());
@@ -12,7 +10,7 @@ app.use(express.json());
 
 // Initialize Supabase Client
 const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY; // Must use Service Role for secure updates
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // --- HELPER: Get OAuth Token ---
@@ -38,12 +36,10 @@ async function getAccessToken(req, res, next) {
 app.post('/api/stkpush', getAccessToken, async (req, res) => {
     const { phoneNumber, amount, accountReference, transactionDesc } = req.body;
 
-    // Default Sandbox Credentials
     const shortCode = process.env.MPESA_SHORTCODE || "174379";
     const passkey = process.env.MPESA_PASSKEY || "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
-    const callbackUrl = process.env.MPESA_CALLBACK_URL; // Must be HTTPS
+    const callbackUrl = process.env.MPESA_CALLBACK_URL;
 
-    // Generate Timestamp & Password
     const date = new Date();
     const timestamp = date.getFullYear() +
         ("0" + (date.getMonth() + 1)).slice(-2) +
@@ -75,7 +71,6 @@ app.post('/api/stkpush', getAccessToken, async (req, res) => {
             { headers: { Authorization: `Bearer ${req.token}` } }
         );
 
-        // PERSISTENCE: Save to Supabase (Pending)
         if (response.data.ResponseCode === "0") {
             const { error } = await supabase
                 .from('mpesa_transactions')
@@ -84,7 +79,6 @@ app.post('/api/stkpush', getAccessToken, async (req, res) => {
                     checkout_request_id: response.data.CheckoutRequestID,
                     status: 'requested',
                     amount: amount
-                    // Note: order_id should ideally be passed from frontend and saved here
                 });
 
             if (error) console.error("Supabase Insert Error:", error);
@@ -104,7 +98,7 @@ app.post('/api/callback', async (req, res) => {
 
     if (callbackData) {
         const checkoutReqID = callbackData.CheckoutRequestID;
-        const resultCode = callbackData.ResultCode; // 0 = Success
+        const resultCode = callbackData.ResultCode;
         const resultDesc = callbackData.ResultDesc;
         const status = resultCode === 0 ? "completed" : "failed";
 
@@ -114,7 +108,6 @@ app.post('/api/callback', async (req, res) => {
             if (receiptItem) receipt = receiptItem.Value;
         }
 
-        // PERSISTENCE: Update Supabase
         const { error } = await supabase
             .from('mpesa_transactions')
             .update({
@@ -130,7 +123,6 @@ app.post('/api/callback', async (req, res) => {
     res.json({ result: "success" });
 });
 
-// --- ROUTE: Check Status (Polling) ---
 app.get('/api/status/:checkoutRequestId', async (req, res) => {
     const { checkoutRequestId } = req.params;
 
@@ -144,13 +136,7 @@ app.get('/api/status/:checkoutRequestId', async (req, res) => {
         return res.json({ status: "UNKNOWN" });
     }
 
-    res.json({ status: data.status.toUpperCase() }); // RETURN 'SUCCESS', 'FAILED', 'PENDING' (mapped)
+    res.json({ status: data.status.toUpperCase() });
 });
 
-// For local testing
-const PORT = process.env.PORT || 3001;
-if (require.main === module) {
-    app.listen(PORT, () => console.log(`Vertex API running on port ${PORT}`));
-}
-
-module.exports = app;
+export default app;
