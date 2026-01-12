@@ -7,6 +7,15 @@ export interface StkPushResponse {
   CustomerMessage: string;
 }
 
+const getApiUrl = () => {
+  // In development, use local backend port 3001
+  if (window.location.hostname === 'localhost') {
+    return 'http://localhost:3001/api';
+  }
+  // In production (Vercel), use relative path which routes to /api function
+  return '/api';
+};
+
 export const mpesaService = {
   /**
    * Mock STK Push request
@@ -14,8 +23,10 @@ export const mpesaService = {
   async triggerStkPush(phoneNumber: string, amount: number): Promise<StkPushResponse> {
     console.log(`[Vertex] Triggering Real STK Push for ${phoneNumber}`);
 
+    const API_URL = getApiUrl();
+
     try {
-      const response = await fetch('http://localhost:3001/api/stkpush', {
+      const response = await fetch(`${API_URL}/stkpush`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,9 +55,10 @@ export const mpesaService = {
     let attempts = 0;
     const maxAttempts = 30; // Poll for 60 seconds (30 * 2s)
 
+    const API_URL = getApiUrl();
     while (attempts < maxAttempts) {
       try {
-        const response = await fetch(`http://localhost:3001/api/status/${checkoutRequestId}`);
+        const response = await fetch(`${API_URL}/status/${checkoutRequestId}`);
         const data = await response.json();
 
         if (data.status === 'SUCCESS') return 'SUCCESS';
